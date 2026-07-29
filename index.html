@@ -181,10 +181,18 @@ section{scroll-margin-top:76px}
 /* ---------- News ---------- */
 .news-list{border-top:1px solid var(--line)}
 .news-item{
-  display:grid;grid-template-columns:110px 92px 1fr 30px;gap:22px;align-items:center;
-  padding:24px 6px;border-bottom:1px solid var(--line);transition:background .35s var(--e),padding .35s var(--e);
+  display:grid;grid-template-columns:132px 110px 92px 1fr 30px;gap:22px;align-items:center;
+  padding:18px 6px;border-bottom:1px solid var(--line);transition:background .35s var(--e),padding .35s var(--e);
 }
 .news-item:hover{background:#fff;padding-left:16px}
+.news-thumb{
+  aspect-ratio:4/3;overflow:hidden;background:var(--paper-2);display:block;
+}
+.news-thumb img{
+  width:100%;height:100%;object-fit:cover;object-position:50% 22%;
+  transition:transform .8s var(--e);
+}
+.news-item:hover .news-thumb img{transform:scale(1.07)}
 .news-date{font-family:var(--serif);font-weight:500;font-size:16px;letter-spacing:.1em;color:var(--ink-2)}
 .news-cat{
   font-size:10.5px;letter-spacing:.18em;color:var(--gold-deep);border:1px solid var(--gold);
@@ -346,11 +354,12 @@ section{scroll-margin-top:76px}
   .mv-logo-tile{grid-column:1/-1;aspect-ratio:2/.9}
   .mv-foot{flex-direction:column;align-items:flex-start;gap:16px}
   .tal-grid{grid-template-columns:repeat(2,1fr)}
-  .news-item{grid-template-columns:86px 1fr 22px;grid-template-rows:auto auto;gap:6px 14px;padding:18px 4px}
-  .news-date{font-size:14px}
-  .news-cat{grid-column:2;grid-row:1;justify-self:start;padding:3px 14px}
-  .news-title{grid-column:1/-1;grid-row:2}
-  .news-ar{grid-column:3;grid-row:1}
+  .news-item{grid-template-columns:96px auto 1fr 24px;grid-template-rows:auto 1fr;gap:6px 14px;padding:14px 4px}
+  .news-thumb{grid-column:1;grid-row:1/3;aspect-ratio:1/1}
+  .news-date{font-size:13.5px;grid-column:2;grid-row:1}
+  .news-cat{grid-column:3;grid-row:1;justify-self:start;padding:3px 14px}
+  .news-title{grid-column:2/5;grid-row:2;font-size:13px;align-self:start;line-height:1.7}
+  .news-ar{grid-column:4;grid-row:1}
   .cta-grid{grid-template-columns:1fr}
   .modal-dl .row{grid-template-columns:88px 1fr}
 }
@@ -419,12 +428,12 @@ section{scroll-margin-top:76px}
       <h2 class="sec-title">ニュース</h2>
     </div>
     <ul class="news-list">
-      <li><a class="news-item rv" style="--d:.0s" href="https://mi-so.jp/news/" target="_blank" rel="noopener"><span class="news-date">2026.06.15</span><span class="news-cat">メディア</span><span class="news-title">原莉子が「WINTICKET ミッドナイト競輪 松阪 F2 初日」に出演致します</span><span class="news-ar">→</span></a></li>
-      <li><a class="news-item rv" style="--d:.05s" href="https://mi-so.jp/news/" target="_blank" rel="noopener"><span class="news-date">2026.04.15</span><span class="news-cat">メディア</span><span class="news-title">原莉子が ABEMA「KEIRIN ADVANCE」小松島 F1 最終日に出演致します</span><span class="news-ar">→</span></a></li>
-      <li><a class="news-item rv" style="--d:.1s" href="https://mi-so.jp/news/" target="_blank" rel="noopener"><span class="news-date">2026.03.06</span><span class="news-cat">イベント</span><span class="news-title">ドコモ超十代2026に山本光が出演致します</span><span class="news-ar">→</span></a></li>
-      <li><a class="news-item rv" style="--d:.15s" href="https://mi-so.jp/news/" target="_blank" rel="noopener"><span class="news-date">2026.03.04</span><span class="news-cat">メディア</span><span class="news-title">原莉子が「佐久間宣行のNOBROCK TV」に出演してます</span><span class="news-ar">→</span></a></li>
-      <li><a class="news-item rv" style="--d:.2s" href="https://mi-so.jp/news/" target="_blank" rel="noopener"><span class="news-date">2026.01.19</span><span class="news-cat">メディア</span><span class="news-title">「激推し！今夜もドル箱」（テレビ東京）に吉沢朱音が出演致します</span><span class="news-ar">→</span></a></li>
-      <li><a class="news-item rv" style="--d:.25s" href="https://mi-so.jp/news/" target="_blank" rel="noopener"><span class="news-date">2025.10.08</span><span class="news-cat">メディア</span><span class="news-title">りんりん（ぐりーずまん）が「プレバト」（TBS）に出演致します</span><span class="news-ar">→</span></a></li>
+      <li><a class="news-item rv" style="--d:.0s" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8cwinticket-%e3%83%9f%e3%83%83%e3%83%89%e3%83%8a%e3%82%a4%e3%83%88%e7%ab%b6%e8%bc%aa-%e6%9d%be%e9%98%aa-f2-%e5%88%9d%e6%97%a5%e3%80%8d%e3%81%ab%e5%87%ba/" target="_blank" rel="noopener"><span class="news-thumb"><img src="assets/talent/riko-2.jpg" alt="原 莉子" loading="lazy"></span><span class="news-date">2026.06.15</span><span class="news-cat">メディア</span><span class="news-title">原莉子が「WINTICKET ミッドナイト競輪 松阪 F2 初日」に出演致します</span><span class="news-ar">→</span></a></li>
+      <li><a class="news-item rv" style="--d:.05s" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c-abema-%e3%80%8ckeirin-advance-%e3%80%8d%e5%b0%8f%e6%9d%be%e5%b3%b6-f1-%e6%9c%80%e7%b5%82%e6%97%a5%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99/" target="_blank" rel="noopener"><span class="news-thumb"><img src="assets/talent/riko.jpg" alt="原 莉子" loading="lazy"></span><span class="news-date">2026.04.15</span><span class="news-cat">メディア</span><span class="news-title">原莉子が ABEMA「KEIRIN ADVANCE」小松島 F1 最終日に出演致します</span><span class="news-ar">→</span></a></li>
+      <li><a class="news-item rv" style="--d:.1s" href="https://mi-so.jp/news/%e3%83%89%e3%82%b3%e3%83%a2%e8%b6%85%e5%8d%81%e4%bb%a32026%e3%81%ab%e5%b1%b1%e6%9c%ac%e5%85%89%e3%81%8c%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99%e3%80%82/" target="_blank" rel="noopener"><span class="news-thumb"><img src="assets/talent/hikaru-2.jpg" alt="山本 光" loading="lazy"></span><span class="news-date">2026.03.06</span><span class="news-cat">イベント</span><span class="news-title">ドコモ超十代2026に山本光が出演致します</span><span class="news-ar">→</span></a></li>
+      <li><a class="news-item rv" style="--d:.15s" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8c%e4%bd%90%e4%b9%85%e9%96%93%e5%ae%9c%e8%a1%8c%e3%81%aenobrock-tv-%e3%80%8d%e3%81%ab%e5%87%ba%e6%bc%94%e3%81%97%e3%81%a6%e3%81%be%e3%81%99%e3%80%82/" target="_blank" rel="noopener"><span class="news-thumb"><img src="assets/talent/riko-2.jpg" alt="原 莉子" loading="lazy"></span><span class="news-date">2026.03.04</span><span class="news-cat">メディア</span><span class="news-title">原莉子が「佐久間宣行のNOBROCK TV」に出演してます</span><span class="news-ar">→</span></a></li>
+      <li><a class="news-item rv" style="--d:.2s" href="https://mi-so.jp/news/%e3%80%8c%e6%bf%80%e6%8e%a8%e3%81%97%ef%bc%81%e4%bb%8a%e5%a4%9c%e3%82%82%e3%83%89%e3%83%ab%e7%ae%b1%e3%80%8d-%e3%83%86%e3%83%ac%e6%9d%b1%e3%81%ab%e5%90%89%e6%b2%a2%e6%9c%b1%e9%9f%b3%e3%81%8c%e5%87%ba/" target="_blank" rel="noopener"><span class="news-thumb"><img src="assets/talent/akane.jpg" alt="吉沢 朱音" loading="lazy"></span><span class="news-date">2026.01.19</span><span class="news-cat">メディア</span><span class="news-title">「激推し！今夜もドル箱」（テレビ東京）に吉沢朱音が出演致します</span><span class="news-ar">→</span></a></li>
+      <li><a class="news-item rv" style="--d:.25s" href="https://mi-so.jp/news/%e3%82%8a%e3%82%93%e3%82%8a%e3%82%93%e3%81%90%e3%82%8a%e3%83%bc%e3%81%9a%e3%81%be%e3%82%93%e3%81%8c%e3%80%8c%e3%83%97%e3%83%ac%e3%83%90%e3%83%88%e3%80%8dtbs-%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4/" target="_blank" rel="noopener"><span class="news-thumb"><img src="assets/talent/rinrin-2.jpg" alt="ぐりーずまん（りんりん）" loading="lazy"></span><span class="news-date">2025.10.08</span><span class="news-cat">メディア</span><span class="news-title">りんりん（ぐりーずまん）が「プレバト」（TBS）に出演致します</span><span class="news-ar">→</span></a></li>
     </ul>
     <a class="sec-more rv" href="https://mi-so.jp/news/" target="_blank" rel="noopener">view all<span class="ar">→</span></a>
   </div>
