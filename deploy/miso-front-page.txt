@@ -350,6 +350,12 @@ section{scroll-margin-top:76px}
   .news-title{font-size:12.5px;line-height:1.75;margin-top:7px}
   .cta-grid{grid-template-columns:1fr}
 }
+/* ===== PC(961px以上)のみ：ヒーローを本文と同じ1160px幅に揃え、タイルを横長にして主張を抑える
+   ※スマホ(720px以下)とニュースには一切影響しません ===== */
+@media(min-width:961px){
+  .mv-grid{max-width:1160px}
+  .mv-tile{aspect-ratio:4/3}
+}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv,.mv-tile{opacity:1;transform:none}
