@@ -236,33 +236,66 @@ section{scroll-margin-top:76px}
 .modal.open{opacity:1;visibility:visible}
 .modal-panel{
   background:var(--paper);max-width:980px;width:100%;max-height:88vh;overflow:auto;
-  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  padding:clamp(26px,3.6vw,52px);
   transform:translateY(26px) scale(.985);transition:transform .5s var(--e);
   position:relative;
 }
 .modal.open .modal-panel{transform:none}
 .modal-close{
-  position:absolute;top:0;right:0;width:52px;height:52px;border:0;background:var(--ink);color:#fff;
-  font-size:18px;cursor:pointer;z-index:5;transition:background .3s;
+  position:sticky;top:0;float:right;width:44px;height:44px;border:0;background:var(--ink);color:#fff;
+  font-size:18px;cursor:pointer;z-index:5;transition:background .3s;margin:-12px -12px 0 0;
 }
 .modal-close:hover{background:var(--gold-deep)}
-.modal-ph{position:relative;min-height:320px}
-.modal-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
-.modal-body{padding:clamp(26px,3.6vw,48px)}
 .modal-cat{font-size:10px;letter-spacing:.4em;color:var(--gold);font-weight:500}
-.modal-jp{font-size:clamp(24px,2.8vw,32px);font-weight:700;letter-spacing:.12em;margin-top:8px}
-.modal-en{font-family:var(--serif);font-style:italic;font-size:17px;letter-spacing:.14em;color:var(--gray);margin-top:2px}
-.modal-dl{margin-top:26px;border-top:1px solid var(--line)}
-.modal-dl .row{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px 2px;border-bottom:1px solid var(--line);font-size:13px}
-.modal-dl .row dt{color:var(--gray);letter-spacing:.1em;font-weight:500}
-.modal-dl .row dd{letter-spacing:.03em;line-height:1.8}
-.modal-sns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.modal-sns a{
-  font-size:11px;letter-spacing:.16em;border:1px solid var(--gold);color:var(--gold-deep);
-  padding:8px 18px;border-radius:999px;font-weight:500;transition:background .3s,color .3s;
+
+/* --- talent-top: 写真 + 名前 + 表 --- */
+.td-top{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:clamp(20px,3vw,40px);align-items:start}
+.td-thm{background:var(--paper-2);overflow:hidden;aspect-ratio:3/4}
+.td-thm img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
+.td-name{font-size:clamp(22px,2.6vw,30px);font-weight:700;letter-spacing:.12em;margin-top:8px}
+.td-en{font-family:var(--serif);font-style:italic;font-size:16px;letter-spacing:.14em;color:var(--gray);margin-top:2px}
+.td-table{width:100%;border-collapse:collapse;margin-top:22px;border-top:1px solid var(--line)}
+.td-table th,.td-table td{border-bottom:1px solid var(--line);padding:11px 2px;font-size:13px;text-align:left;vertical-align:top}
+.td-table th{width:104px;color:var(--gray);letter-spacing:.1em;font-weight:500;white-space:nowrap}
+.td-table td{letter-spacing:.03em;line-height:1.8}
+.td-sns{
+  display:inline-block;margin:2px 8px 2px 0;font-size:11px;letter-spacing:.14em;
+  border:1px solid var(--gold);color:var(--gold-deep);padding:5px 14px;border-radius:999px;font-weight:500;
+  transition:background .3s,color .3s;
 }
-.modal-sns a:hover{background:var(--gold);color:#fff}
-.modal-official{display:inline-flex;align-items:center;gap:10px;margin-top:26px;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.1em;color:var(--ink)}
+.td-sns:hover{background:var(--gold);color:#fff}
+
+/* --- talent-infor: 雑誌/イベント/TV など --- */
+.td-infor{margin-top:clamp(26px,3.4vw,44px)}
+.td-item{margin-top:clamp(24px,3vw,38px)}
+.td-item-title{
+  font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--ink);
+  padding-bottom:10px;border-bottom:1px solid var(--gold);display:inline-block;
+}
+.td-item-txt{font-size:13px;line-height:2.1;letter-spacing:.03em;margin-top:14px;white-space:pre-line}
+
+/* --- プロフィール写真 --- */
+.td-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
+.td-photo{aspect-ratio:3/4;overflow:hidden;background:var(--paper-2)}
+.td-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--e)}
+.td-photo:hover img{transform:scale(1.05)}
+
+/* --- 関連ニュース --- */
+.td-news{margin-top:16px;border-top:1px solid var(--line)}
+.td-news-item{
+  display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:center;
+  padding:14px 2px;border-bottom:1px solid var(--line);transition:background .3s var(--e);
+}
+.td-news-item:hover{background:#fff}
+.td-news-thumb{aspect-ratio:4/3;overflow:hidden;background:var(--paper-2);display:block}
+.td-news-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.td-news-meta{display:block}
+.td-news-date{font-family:var(--serif);font-size:14px;letter-spacing:.08em;color:var(--ink-2);margin-right:12px}
+.td-news-cat{font-size:10px;letter-spacing:.16em;color:var(--gold-deep);border:1px solid var(--gold);padding:2px 10px;border-radius:999px}
+.td-news-title{display:block;font-size:13px;line-height:1.8;margin-top:6px}
+
+.td-foot{margin-top:clamp(26px,3.4vw,40px);padding-top:22px;border-top:1px solid var(--line)}
+.modal-official{display:inline-flex;align-items:center;gap:10px;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.1em;color:var(--ink)}
 .modal-official .ar{width:32px;height:32px;border:1px solid var(--ink);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;transition:background .3s,color .3s}
 .modal-official:hover .ar{background:var(--ink);color:#fff}
 
@@ -340,9 +373,9 @@ section{scroll-margin-top:76px}
   .tal-grid{grid-template-columns:repeat(3,1fr)}
   .biz-grid{grid-template-columns:1fr}
   .comp-wrap{grid-template-columns:1fr;gap:26px}
-  .modal-panel{grid-template-columns:1fr;max-height:90vh}
-  .modal-ph{aspect-ratio:4/3;min-height:0}
-  .modal-ph img{position:relative}
+  .modal-panel{max-height:90vh}
+  .td-top{grid-template-columns:1fr;gap:20px}
+  .td-thm{aspect-ratio:4/3}
 }
 @media(max-width:720px){
   .hdr-nav a.nlink,.hdr-cta{display:none}
@@ -358,7 +391,9 @@ section{scroll-margin-top:76px}
   .news-title{grid-column:2/5;grid-row:2;font-size:13px;align-self:start;line-height:1.7}
   .news-ar{grid-column:4;grid-row:1}
   .cta-grid{grid-template-columns:1fr}
-  .modal-dl .row{grid-template-columns:88px 1fr}
+  .td-table th{width:86px}
+  .td-photos{grid-template-columns:repeat(2,1fr)}
+  .td-news-item{grid-template-columns:70px 1fr;gap:12px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -555,18 +590,38 @@ section{scroll-margin-top:76px}
   </div>
 </footer>
 
-<!-- Talent modal -->
+<!-- Talent modal（本家 mi-so.jp のタレント詳細ページと同じ構成） -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="タレントプロフィール">
   <div class="modal-panel">
     <button class="modal-close" id="modalClose" aria-label="閉じる">×</button>
-    <div class="modal-ph"><img id="mImg" src="" alt=""></div>
-    <div class="modal-body">
-      <p class="modal-cat">talent profile</p>
-      <h3 class="modal-jp" id="mJp"></h3>
-      <p class="modal-en" id="mEn"></p>
-      <dl class="modal-dl" id="mDl"></dl>
-      <div class="modal-sns" id="mSns"></div>
-      <br>
+
+    <!-- talent-top: メイン写真 + 名前 + プロフィール表 -->
+    <div class="td-top">
+      <div class="td-thm"><img id="mImg" src="" alt=""></div>
+      <div class="td-data">
+        <p class="modal-cat">talent</p>
+        <h3 class="td-name" id="mJp"></h3>
+        <p class="td-en" id="mEn"></p>
+        <table class="td-table"><tbody id="mTable"></tbody></table>
+      </div>
+    </div>
+
+    <!-- talent-infor: 雑誌 / イベント / TV など + プロフィール写真 -->
+    <div class="td-infor" id="mBoxes"></div>
+
+    <!-- プロフィール写真ギャラリー -->
+    <div class="td-item" id="mPhotoWrap" hidden>
+      <h4 class="td-item-title">プロフィール</h4>
+      <div class="td-photos" id="mPhotos"></div>
+    </div>
+
+    <!-- 関連ニュース -->
+    <div class="td-item" id="mNewsWrap" hidden>
+      <h4 class="td-item-title">関連ニュース</h4>
+      <div class="td-news" id="mNews"></div>
+    </div>
+
+    <div class="td-foot">
       <a class="modal-official" id="mUrl" href="" target="_blank" rel="noopener">official profile<span class="ar">→</span></a>
     </div>
   </div>
@@ -575,54 +630,570 @@ section{scroll-margin-top:76px}
 <script>
 /* ---------- Talent data (mi-so.jp 引用) ---------- */
 var TAL = {
-  rinrin: {
-    jp:"ぐりーずまん（りんりん）", en:"Gurizuman (Rinrin)", img:"assets/talent/rinrin-2.jpg",
-    rows:[["生年月日","2003年8月27日"],["出身地","北海道"],["サイズ","T158 / S23.5"],["血液型","A型"],["趣味","身体を動かす事・英語学習・TikTok"],["キャリア","マレーシア語学留学／オーストラリアワーキングホリデー／フィリピン語学留学"],["主な出演","「プレバト」（TBS）"]],
-    sns:[["Instagram","https://www.instagram.com/gurizuman_a/"],["TikTok","https://www.tiktok.com/@gurizuman_"]],
-    url:"https://mi-so.jp/talent/%e3%81%90%e3%82%8a%e3%83%bc%e3%81%9a%e3%81%be%e3%82%93%ef%bc%88%e3%82%8a%e3%82%93%e3%82%8a%e3%82%93%ef%bc%89/"
-  },
-  hikaru: {
-    jp:"山本 光", en:"Hikaru Yamamoto", img:"assets/talent/hikaru-2.jpg",
-    rows:[["生年月日","2006年5月23日"],["出身地","三重県"],["サイズ","T153 / S23"],["血液型","A型"],["趣味","猫カフェ巡り・けん玉"],["主な出演","ドコモ超十代2026／Rakuten GirlsAward 2025 AUTUMN/WINTER"]],
-    sns:[["Instagram","https://www.instagram.com/hikaru_02_03/"],["TikTok","https://www.tiktok.com/@pi_ka_023"],["X","https://x.com/pika_23_48"]],
-    url:"https://mi-so.jp/talent/%e5%b1%b1%e6%9c%ac-%e5%85%89/"
-  },
-  akane: {
-    jp:"吉沢 朱音", en:"Akane Yoshizawa", img:"assets/talent/akane-2.jpg",
-    rows:[["生年月日","1997年7月2日"],["出身地","福岡県"],["サイズ","T160 / B78 W58 H86"],["血液型","A型"],["趣味・特技","可愛い女の子・ラーメン／マジック"],["雑誌","ヤングマガジン／Platinum FLASH／B.L.T.／グラビアザテレビジョン／EX大衆／週刊ヤングジャンプ"],["主な出演","佐久間宣行のNOBROCK TV／激推し！今夜もドル箱（テレビ東京）／WinTicketミッドナイト競輪（ABEMA）"]],
-    sns:[["Instagram","https://www.instagram.com/nesomagic72/"],["TikTok","https://tiktok.com/@nesomagic72"],["X","https://twitter.com/akanekogurasi"],["YouTube","https://www.youtube.com/@nesomagic72"]],
-    url:"https://mi-so.jp/talent/%e5%90%89%e6%b2%a2-%e6%9c%b1%e9%9f%b3/"
-  },
-  sayuri: {
-    jp:"上原 沙弓理", en:"Sayuri Uehara", img:"assets/talent/sayuri-2.jpg",
-    rows:[["生年月日","2002年9月24日"],["出身地","東京都"],["サイズ","T167 / B85 W59 H87 / S24.5"],["血液型","B型"],["趣味","ボディメイク"],["受賞歴","ベストボディジャパン横浜2021 グランプリ／ベストボディジャパン2021 日本大会 TOP10"],["主な出演","Rakuten GirlsAward 2024 A/W／SAPPORO COLLECTION／ヒロミ・指原の恋のお世話始めました（ABEMA）"]],
-    sns:[["Instagram","https://www.instagram.com/4_mlj6/"],["TikTok","https://www.tiktok.com/@4_mlj6"]],
-    url:"https://mi-so.jp/talent/%e4%b8%8a%e5%8e%9f-%e6%b2%99%e5%bc%93%e7%90%86/"
-  },
-  sena: {
-    jp:"森田 聖奈", en:"Sena Morita", img:"assets/talent/sena-2.jpg",
-    rows:[["生年月日","1993年2月3日"],["出身地","大阪府"],["サイズ","T164 / B81 W59 H85 / S24"],["血液型","B型"],["趣味","アニメ・映画鑑賞・ゴルフ・キックボクシング・KPOPダンス"],["TV","ゴッドタン ゲラ女王決定戦（テレビ東京）／全力坂（テレビ朝日）"],["CM","ハスラー（SUZUKI）／GUM（サンスター）／男梅サワー（サッポロ）／Galaxy note8 ほか"],["イベント","関西コレクション ほか"]],
-    sns:[["Instagram","https://www.instagram.com/morita_sena/"],["X","https://x.com/seenapii23"]],
-    url:"https://mi-so.jp/talent/%e6%a3%ae%e7%94%b0-%e8%81%96%e5%a5%88/"
-  },
-  yuduki: {
-    jp:"和氣 柚月", en:"Yuduki Wake", img:"assets/talent/yuduki-2.jpg",
-    rows:[["生年月日","2001年6月21日"],["出身地","神奈川県"],["サイズ","T159 / S23.5"],["血液型","O型"],["趣味","映画鑑賞"],["資格","普通自動車免許"],["主な出演","「プレバト 2時間SP」（TBS）"]],
-    sns:[],
-    url:"https://mi-so.jp/talent/%e5%92%8c%e6%b0%a3-%e6%9f%9a%e6%9c%88/"
-  },
-  riko: {
-    jp:"原 莉子", en:"Riko Hara", img:"assets/talent/riko-2.jpg",
-    rows:[["生年月日","2003年4月23日"],["出身地","東京都"],["サイズ","T158 / S24"],["血液型","O型"],["趣味","サッカー・絵を描く事"],["経歴","2022年 第30回全日本高等学校女子サッカー選手権大会 準決勝進出"],["主な出演","佐久間宣行のNOBROCK TV／WINTICKET ミッドナイト競輪／ABEMA「KEIRIN ADVANCE」"]],
-    sns:[["Instagram","https://www.instagram.com/rikohara_/"],["TikTok","https://www.tiktok.com/@rikohara_"],["X","https://x.com/rikohara_"]],
-    url:"https://mi-so.jp/talent/%e5%8e%9f-%e8%8e%89%e5%ad%90/"
-  },
-  ali: {
-    jp:"あーり（愛里）", en:"ALI", img:"assets/talent/ali-2.jpg",
-    rows:[["生年月日","2005年2月3日"],["出身地","岡山県"],["サイズ","T159 / S24"],["血液型","A型"],["主な出演","TGC teen 2023"]],
-    sns:[["Instagram","https://www.instagram.com/air__0203/"],["TikTok","https://www.tiktok.com/@aa_a0023"]],
-    url:"https://mi-so.jp/talent/%e3%81%82%e3%83%bc%e3%82%8a%ef%bc%88%e6%84%9b%e9%87%8c%ef%bc%89/"
-  }
+ "rinrin": {
+  "jp": "ぐりーずまん（りんりん）",
+  "en": "Gurizuman(Rinrin)",
+  "url": "https://mi-so.jp/talent/%e3%81%90%e3%82%8a%e3%83%bc%e3%81%9a%e3%81%be%e3%82%93%ef%bc%88%e3%82%8a%e3%82%93%e3%82%8a%e3%82%93%ef%bc%89/",
+  "main": "assets/gallery/rinrin-1.jpg",
+  "photos": [
+   "assets/gallery/rinrin-1.jpg",
+   "assets/gallery/rinrin-2.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "2003年8月27日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "北海道"
+   },
+   {
+    "label": "身長",
+    "value": "T:158 S:23.5"
+   },
+   {
+    "label": "血液型",
+    "value": "A型"
+   },
+   {
+    "label": "趣味",
+    "value": "身体を動かす事 英語学習 TikTok"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://www.instagram.com/gurizuman_a/",
+      "text": "Instagram"
+     },
+     {
+      "url": "https://www.tiktok.com/@gurizuman_?lang=ja-JP",
+      "text": "Tiktok"
+     }
+    ]
+   }
+  ],
+  "boxes": [
+   {
+    "title": "キャリア",
+    "body": "■マレーシア語学留学\n\r\n■オーストラリアワーキングホリデー\n\r\n■フィリピン語学留学"
+   }
+  ],
+  "news": [
+   {
+    "date": "2025.10.08",
+    "cat": "メディア",
+    "title": "りんりん(ぐりーずまん)が「プレバト」(TBS) に出演致します。",
+    "url": "https://mi-so.jp/news/%e3%82%8a%e3%82%93%e3%82%8a%e3%82%93%e3%81%90%e3%82%8a%e3%83%bc%e3%81%9a%e3%81%be%e3%82%93%e3%81%8c%e3%80%8c%e3%83%97%e3%83%ac%e3%83%90%e3%83%88%e3%80%8dtbs-%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4/",
+    "img": "assets/news/n-b32ecfb8ad.jpg"
+   }
+  ]
+ },
+ "hikaru": {
+  "jp": "山本 光",
+  "en": "Yamamoto Hikaru",
+  "url": "https://mi-so.jp/talent/%e5%b1%b1%e6%9c%ac-%e5%85%89/",
+  "main": "assets/gallery/hikaru-1.jpg",
+  "photos": [
+   "assets/gallery/hikaru-1.jpg",
+   "assets/gallery/hikaru-2.jpg",
+   "assets/gallery/hikaru-3.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "2006年5月23日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "三重"
+   },
+   {
+    "label": "身長",
+    "value": "T:153 S:23"
+   },
+   {
+    "label": "血液型",
+    "value": "A型"
+   },
+   {
+    "label": "趣味",
+    "value": "猫カフェ巡り けん玉"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://x.com/pika_23_48",
+      "text": "X"
+     },
+     {
+      "url": "https://www.instagram.com/hikaru_02_03/",
+      "text": "Instagram"
+     },
+     {
+      "url": "https://www.tiktok.com/@pi_ka_023",
+      "text": "Tiktok"
+     }
+    ]
+   }
+  ],
+  "boxes": [],
+  "news": [
+   {
+    "date": "2026.03.06",
+    "cat": "イベント",
+    "title": "ドコモ超十代2026に山本光が出演致します。",
+    "url": "https://mi-so.jp/news/%e3%83%89%e3%82%b3%e3%83%a2%e8%b6%85%e5%8d%81%e4%bb%a32026%e3%81%ab%e5%b1%b1%e6%9c%ac%e5%85%89%e3%81%8c%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99%e3%80%82/",
+    "img": "assets/news/n-c2980c61b7.jpg"
+   },
+   {
+    "date": "2025.10.08",
+    "cat": "イベント",
+    "title": "「Rakuten GirlsAward 2025 AUTUMN/WINTER」に…",
+    "url": "https://mi-so.jp/news/%e3%80%8crakuten-girlsaward-2025-autumn-winter%e3%80%8d%e3%81%ab%e5%b1%b1%e6%9c%ac%e5%85%89%e3%81%8c%e5%87%ba%e6%bc%94%e6%b1%ba%e5%ae%9a%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%ef%bc%81/",
+    "img": "assets/news/n-df6491eee7.jpg"
+   }
+  ]
+ },
+ "akane": {
+  "jp": "吉沢 朱音",
+  "en": "AKANE YOSHIZAWA",
+  "url": "https://mi-so.jp/talent/%e5%90%89%e6%b2%a2-%e6%9c%b1%e9%9f%b3/",
+  "main": "assets/gallery/akane-1.jpg",
+  "photos": [
+   "assets/gallery/akane-1.jpg",
+   "assets/gallery/akane-2.jpg",
+   "assets/gallery/akane-3.jpg",
+   "assets/gallery/akane-4.jpg",
+   "assets/gallery/akane-5.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "1997年7月2日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "福岡県"
+   },
+   {
+    "label": "身長",
+    "value": "T:160 B:78 W:58 H:86"
+   },
+   {
+    "label": "血液型",
+    "value": "A型"
+   },
+   {
+    "label": "趣味",
+    "value": "可愛い女の子/ラーメン 特技:マジック"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://twitter.com/akanekogurasi",
+      "text": "X"
+     },
+     {
+      "url": "https://www.instagram.com/nesomagic72/?hl=ja",
+      "text": "Instagram"
+     },
+     {
+      "url": "https://tiktok.com/@nesomagic72?is_copy_url=1&is_from_webapp=v1",
+      "text": "Tiktok"
+     },
+     {
+      "url": "https://www.youtube.com/@nesomagic72",
+      "text": "Youtube"
+     }
+    ]
+   }
+  ],
+  "boxes": [
+   {
+    "title": "雑誌",
+    "body": "講談社「ヤングマガジン」\n\r\n光文社「Platinum FLASH[プラチナフラッシュ] Vol.13 」\n\r\n東京ニュース通信社「B.L.T.」\n\r\nKADOKAWA「グラビアザテレビジョン(Gテレ)」\n\r\n双葉社「EX大衆」\n\r\n集英社「週刊ヤングジャンプ」\n\r\n第1回沖縄コレクション2023"
+   },
+   {
+    "title": "イベント",
+    "body": "第1回沖縄コレクション2023"
+   },
+   {
+    "title": "TV/ネット配信番組",
+    "body": "佐久間宣行のNOBROCK TV\n\r\nSHOW激！今夜もドル箱（テレビ東京）\n\r\nWinTicketミッドナイト競輪（ABEMA）\n\r\n元アイドルの現役マジシャンでマイ鳩飼ってます! 返しの天才、何事にも動じないです。"
+   }
+  ],
+  "news": [
+   {
+    "date": "2026.01.19",
+    "cat": "メディア",
+    "title": "「激推し！今夜もドル箱」 テレ東に吉沢朱音が出演致します。",
+    "url": "https://mi-so.jp/news/%e3%80%8c%e6%bf%80%e6%8e%a8%e3%81%97%ef%bc%81%e4%bb%8a%e5%a4%9c%e3%82%82%e3%83%89%e3%83%ab%e7%ae%b1%e3%80%8d-%e3%83%86%e3%83%ac%e6%9d%b1%e3%81%ab%e5%90%89%e6%b2%a2%e6%9c%b1%e9%9f%b3%e3%81%8c%e5%87%ba/",
+    "img": null
+   },
+   {
+    "date": "2025.08.27",
+    "cat": "イベント",
+    "title": "「STARRZ TOKYO 2025」に吉沢朱音が出演決定しました！",
+    "url": "https://mi-so.jp/news/%e3%80%8cstarrz-tokyo-2025%e3%80%8d%e3%81%ab%e5%90%89%e6%b2%a2%e6%9c%b1%e9%9f%b3%e3%81%8c%e5%87%ba%e6%bc%94%e6%b1%ba%e5%ae%9a%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%ef%bc%81/",
+    "img": "assets/news/n-4d676c26b9.jpg"
+   },
+   {
+    "date": "2025.05.20",
+    "cat": "メディア",
+    "title": "「激推し！今夜もドル箱」テレ東に吉沢朱音が出演致します。",
+    "url": "https://mi-so.jp/news/%e3%80%8c%e6%bf%80%e6%8e%a8%e3%81%97%ef%bc%81%e4%bb%8a%e5%a4%9c%e3%82%82%e3%83%89%e3%83%ab%e7%ae%b1%e3%80%8d%e3%83%86%e3%83%ac%e6%9d%b1%e3%81%ab%e5%90%89%e6%b2%a2%e6%9c%b1%e9%9f%b3%e3%81%8c%e5%87%ba/",
+    "img": "assets/news/n-28aacb34ab.jpg"
+   }
+  ]
+ },
+ "sayuri": {
+  "jp": "上原 沙弓理",
+  "en": "UEHARA SAYURI",
+  "url": "https://mi-so.jp/talent/%e4%b8%8a%e5%8e%9f-%e6%b2%99%e5%bc%93%e7%90%86/",
+  "main": "assets/gallery/sayuri-1.jpg",
+  "photos": [
+   "assets/gallery/sayuri-1.jpg",
+   "assets/gallery/sayuri-2.jpg",
+   "assets/gallery/sayuri-3.jpg",
+   "assets/gallery/sayuri-4.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "2002年9月24日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "東京都"
+   },
+   {
+    "label": "身長",
+    "value": "T:167 B: 85 W: 59 H: 87 S: 24.5"
+   },
+   {
+    "label": "血液型",
+    "value": "B型"
+   },
+   {
+    "label": "趣味",
+    "value": "ボディメイク"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://www.instagram.com/4_mlj6/",
+      "text": "Instagram"
+     },
+     {
+      "url": "https://www.tiktok.com/@4_mlj6?_t=8kRKg8i3IVM&_r=1",
+      "text": "Tiktok"
+     }
+    ]
+   }
+  ],
+  "boxes": [
+   {
+    "title": "受賞歴",
+    "body": "ベストボディジャパン横浜2021GP\n\r\nべストボディジャパン2021日本大会TOP10\n\r\n2022/12/31　井岡一翔WBA・WBO世界スーパーフライ級統一タイトルマッチでデビュー"
+   },
+   {
+    "title": "TV/ネット配信番組",
+    "body": "ヒロミ・指原の恋のお世話始めました（ABEMA）"
+   }
+  ],
+  "news": [
+   {
+    "date": "2024.10.16",
+    "cat": "イベント",
+    "title": "『Rakuten GirlsAward 2024 AUTUMN/WINTER』 …",
+    "url": "https://mi-so.jp/news/%e3%80%8erakuten-girlsaward-2024-autumn-winter%e3%80%8f-%e3%81%ab-%e4%b8%8a%e5%8e%9f%e6%b2%99%e5%bc%93%e7%90%86%e3%81%8c%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99%ef%bc%81/",
+    "img": "assets/news/n-52490893ed.jpg"
+   },
+   {
+    "date": "2024.09.12",
+    "cat": "イベント",
+    "title": "SAPPORO COLLECTIONに上原沙弓理が出演致します。",
+    "url": "https://mi-so.jp/news/sapporo-collection%e3%81%ab%e4%b8%8a%e5%8e%9f%e6%b2%99%e5%bc%93%e7%90%86%e3%81%8c%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99%e3%80%82/",
+    "img": "assets/news/n-738adc2f60.jpg"
+   },
+   {
+    "date": "2024.08.30",
+    "cat": "メディア",
+    "title": "「シャッフルアイランドSeason5」#8最終回に上原沙弓理が出演致します。",
+    "url": "https://mi-so.jp/news/%e3%80%8c%e3%82%b7%e3%83%a3%e3%83%83%e3%83%95%e3%83%ab%e3%82%a2%e3%82%a4%e3%83%a9%e3%83%b3%e3%83%89season5%e3%80%8d8%e6%9c%80%e7%b5%82%e5%9b%9e%e3%81%ab%e4%b8%8a%e5%8e%9f%e6%b2%99%e5%bc%93%e7%90%86/",
+    "img": "assets/news/n-1539e40419.jpg"
+   }
+  ]
+ },
+ "sena": {
+  "jp": "森田 聖奈",
+  "en": "MORITA SENA",
+  "url": "https://mi-so.jp/talent/%e6%a3%ae%e7%94%b0-%e8%81%96%e5%a5%88/",
+  "main": "assets/gallery/sena-1.jpg",
+  "photos": [
+   "assets/gallery/sena-1.jpg",
+   "assets/gallery/sena-2.jpg",
+   "assets/gallery/sena-3.jpg",
+   "assets/gallery/sena-4.jpg",
+   "assets/gallery/sena-5.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "1993年2月3日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "大阪府"
+   },
+   {
+    "label": "身長",
+    "value": "T:164 B:81 W:59 H:85 S:24"
+   },
+   {
+    "label": "血液型",
+    "value": "B型"
+   },
+   {
+    "label": "趣味",
+    "value": "アニメ,映画,ドラマ鑑賞,ゴルフ,キックボクシング,KPOPダンス"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://twitter.com/i/flow/login?redirect_after_login=%2Fseenapii23",
+      "text": "X"
+     },
+     {
+      "url": "https://www.instagram.com/morita_sena/?next=%2Fkleelisgehy%2F&hl=id",
+      "text": "Instagram"
+     }
+    ]
+   }
+  ],
+  "boxes": [
+   {
+    "title": "TV/ネット配信番組",
+    "body": "ゴッドタン　ゲラ女王決定戦（テレビ東京）\n\r\n全力坂　若木3丁目の坂　中台2丁目の坂（テレビ朝日）"
+   },
+   {
+    "title": "TV/ネットCM",
+    "body": "ハスラー（SUZUKI）\n\r\nGUM ウェルプラスデンタルリンス（サンスター）\n\r\nベルサイユのばらリキッドアイライナー（バンダイ）\n\r\n男梅サワー（サッポロ）\n\r\nGalaxy note8\n\r\n東京靴流通センター"
+   },
+   {
+    "title": "webネット",
+    "body": "ニッセン\n\r\nベルメゾン"
+   },
+   {
+    "title": "ファッションショー",
+    "body": "関西コレクション　女子博覧会　ムラサキスポーツ"
+   },
+   {
+    "title": "舞台",
+    "body": "「SIX MEN SEVEN WOMEN」（ノーティーボーイズ）\n\r\nNaked Girls - 裸の女達　ぼんじり　ストリッパー物語\n\r\n怪盗☆ドラゴンカンパニーvol.1　イサヤ島の王女と神の右腕"
+   }
+  ],
+  "news": [
+   {
+    "date": "2024.03.22",
+    "cat": "メディア",
+    "title": "WST(ダブスト) ''Chilly Walk'' Official Music…",
+    "url": "https://mi-so.jp/news/wst%e3%83%80%e3%83%96%e3%82%b9%e3%83%88-chilly-walk-official-music-video%e3%81%ab%e5%87%ba%e6%bc%94%ef%bc%81/",
+    "img": "assets/news/n-50aee67165.jpg"
+   }
+  ]
+ },
+ "yuduki": {
+  "jp": "和氣 柚月",
+  "en": "WAKE YUDUKI",
+  "url": "https://mi-so.jp/talent/%e5%92%8c%e6%b0%a3-%e6%9f%9a%e6%9c%88/",
+  "main": "assets/gallery/yuduki-1.jpg",
+  "photos": [
+   "assets/gallery/yuduki-1.jpg",
+   "assets/gallery/yuduki-2.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "2001年6月21日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "神奈川県"
+   },
+   {
+    "label": "身長",
+    "value": "T:159 S:23.5"
+   },
+   {
+    "label": "血液型",
+    "value": "O型"
+   },
+   {
+    "label": "趣味",
+    "value": "映画鑑賞"
+   },
+   {
+    "label": "関連SNS",
+    "value": ""
+   }
+  ],
+  "boxes": [
+   {
+    "title": "資格",
+    "body": "普通自動車免許"
+   }
+  ],
+  "news": [
+   {
+    "date": "2025.04.02",
+    "cat": "メディア",
+    "title": "和氣柚月が「プレバト2時間SP」(TBS)に出演致します",
+    "url": "https://mi-so.jp/news/%e5%92%8c%e6%b0%a3%e6%9f%9a%e6%9c%88%e3%81%8c%e3%80%8c%e3%83%97%e3%83%ac%e3%83%90%e3%83%882%e6%99%82%e9%96%93sp%e3%80%8dtbs%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99/",
+    "img": "assets/news/n-9790a1b8c0.jpg"
+   }
+  ]
+ },
+ "riko": {
+  "jp": "原 莉子",
+  "en": "Riko Hara",
+  "url": "https://mi-so.jp/talent/%e5%8e%9f-%e8%8e%89%e5%ad%90/",
+  "main": "assets/gallery/riko-1.jpg",
+  "photos": [
+   "assets/gallery/riko-1.jpg",
+   "assets/gallery/riko-2.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "2003年4月23日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "東京都"
+   },
+   {
+    "label": "身長",
+    "value": "T:158 S:24"
+   },
+   {
+    "label": "血液型",
+    "value": "O型"
+   },
+   {
+    "label": "趣味",
+    "value": "サッカー 絵を描く事"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://x.com/rikohara_?s=11",
+      "text": "X"
+     },
+     {
+      "url": "https://www.instagram.com/rikohara_/?igsh=NjZoaWI2d2R1cDI3#",
+      "text": "Instagram"
+     },
+     {
+      "url": "https://www.tiktok.com/@rikohara_",
+      "text": "Tiktok"
+     }
+    ]
+   }
+  ],
+  "boxes": [
+   {
+    "title": "イベント",
+    "body": "2022年第30回全日本高等学校女子サッカー選手権大会準決勝進出"
+   }
+  ],
+  "news": [
+   {
+    "date": "2026.06.15",
+    "cat": "メディア",
+    "title": "原莉子が「WINTICKET ミッドナイト競輪 松阪 F2 初日」に出演致します…",
+    "url": "https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8cwinticket-%e3%83%9f%e3%83%83%e3%83%89%e3%83%8a%e3%82%a4%e3%83%88%e7%ab%b6%e8%bc%aa-%e6%9d%be%e9%98%aa-f2-%e5%88%9d%e6%97%a5%e3%80%8d%e3%81%ab%e5%87%ba/",
+    "img": "assets/news/n-d5dde71ac6.jpg"
+   },
+   {
+    "date": "2026.04.15",
+    "cat": "メディア",
+    "title": "原莉子が ABEMA 「KEIRIN ADVANCE 」小松島 F1 最終日に出…",
+    "url": "https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c-abema-%e3%80%8ckeirin-advance-%e3%80%8d%e5%b0%8f%e6%9d%be%e5%b3%b6-f1-%e6%9c%80%e7%b5%82%e6%97%a5%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99/",
+    "img": "assets/news/n-d5dde71ac6.jpg"
+   },
+   {
+    "date": "2026.03.04",
+    "cat": "メディア",
+    "title": "原莉子が「佐久間宜行のNOBROCK TV 」に出演してます。",
+    "url": "https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8c%e4%bd%90%e4%b9%85%e9%96%93%e5%ae%9c%e8%a1%8c%e3%81%aenobrock-tv-%e3%80%8d%e3%81%ab%e5%87%ba%e6%bc%94%e3%81%97%e3%81%a6%e3%81%be%e3%81%99%e3%80%82/",
+    "img": "assets/news/n-d5dde71ac6.jpg"
+   }
+  ]
+ },
+ "ali": {
+  "jp": "あーり（愛里）",
+  "en": "ALI",
+  "url": "https://mi-so.jp/talent/%e3%81%82%e3%83%bc%e3%82%8a%ef%bc%88%e6%84%9b%e9%87%8c%ef%bc%89/",
+  "main": "assets/gallery/ali-1.jpg",
+  "photos": [
+   "assets/gallery/ali-1.jpg",
+   "assets/gallery/ali-2.jpg"
+  ],
+  "table": [
+   {
+    "label": "生年月日",
+    "value": "2005年2月3日生まれ"
+   },
+   {
+    "label": "出身地",
+    "value": "岡山県"
+   },
+   {
+    "label": "身長",
+    "value": "T:159cm S:24cm"
+   },
+   {
+    "label": "血液型",
+    "value": "A型"
+   },
+   {
+    "label": "関連SNS",
+    "links": [
+     {
+      "url": "https://www.instagram.com/air__0203/",
+      "text": "Instagram"
+     },
+     {
+      "url": "https://www.tiktok.com/@aa_a0023",
+      "text": "Tiktok"
+     }
+    ]
+   }
+  ],
+  "boxes": [
+   {
+    "title": "イベント",
+    "body": "TGC teen2023出演"
+   }
+  ],
+  "news": [
+   {
+    "date": "2024.03.18",
+    "cat": "イベント",
+    "title": "シンプルWi-Fi シンプルTV(tiktok)に登場！",
+    "url": "https://mi-so.jp/news/%e3%82%b7%e3%83%b3%e3%83%97%e3%83%abwi-fi-%e3%82%b7%e3%83%b3%e3%83%97%e3%83%abtvtiktok%e3%81%ab%e7%99%bb%e5%a0%b4%ef%bc%81/",
+    "img": "assets/news/n-20d3a6de7a.jpg"
+   }
+  ]
+ }
 };
 
 /* ---------- Loader ---------- */
@@ -664,24 +1235,81 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
 var modal=document.getElementById('modal');
 function openTal(key){
   var d=TAL[key]; if(!d) return;
+
+  /* メイン写真・名前 */
   var im=document.getElementById('mImg');
-  im.src=d.img; im.alt=d.jp;
+  im.src=d.main||''; im.alt=d.jp;
   document.getElementById('mJp').textContent=d.jp;
   document.getElementById('mEn').textContent=d.en;
-  var dl=document.getElementById('mDl'); dl.innerHTML='';
-  d.rows.forEach(function(r){
-    var row=document.createElement('div'); row.className='row';
-    var dt=document.createElement('dt'); dt.textContent=r[0];
-    var dd=document.createElement('dd'); dd.textContent=r[1];
-    row.appendChild(dt); row.appendChild(dd); dl.appendChild(row);
+
+  /* プロフィール表（本家の th/td をそのまま） */
+  var tb=document.getElementById('mTable'); tb.innerHTML='';
+  (d.table||[]).forEach(function(r){
+    if(r.links && !r.links.length) return;              /* 空のSNS行は出さない */
+    var tr=document.createElement('tr');
+    var th=document.createElement('th'); th.textContent=r.label;
+    var td=document.createElement('td');
+    if(r.links){
+      r.links.forEach(function(l){
+        var a=document.createElement('a');
+        a.textContent=l.text; a.href=l.url; a.target='_blank'; a.rel='noopener';
+        a.className='td-sns';
+        td.appendChild(a);
+      });
+    } else {
+      td.textContent=r.value;
+    }
+    tr.appendChild(th); tr.appendChild(td); tb.appendChild(tr);
   });
-  var sns=document.getElementById('mSns'); sns.innerHTML='';
-  d.sns.forEach(function(s){
-    var a=document.createElement('a'); a.textContent=s[0]; a.href=s[1]; a.target='_blank'; a.rel='noopener';
-    sns.appendChild(a);
+
+  /* 雑誌 / イベント / TV など */
+  var bx=document.getElementById('mBoxes'); bx.innerHTML='';
+  (d.boxes||[]).forEach(function(b){
+    if(!b.body) return;
+    var w=document.createElement('div'); w.className='td-item';
+    var h=document.createElement('h4'); h.className='td-item-title'; h.textContent=b.title;
+    var p=document.createElement('p'); p.className='td-item-txt';
+    p.textContent=b.body.replace(/\r/g,'').replace(/\n[ \t]*\n+/g,'\n').trim();   /* 本家の <br>+改行 由来の二重改行を詰める */
+    w.appendChild(h); w.appendChild(p); bx.appendChild(w);
   });
+
+  /* プロフィール写真 */
+  var pw=document.getElementById('mPhotoWrap'), ph=document.getElementById('mPhotos');
+  ph.innerHTML='';
+  var gal=(d.photos||[]);
+  if(gal.length){
+    gal.forEach(function(src){
+      var fig=document.createElement('div'); fig.className='td-photo';
+      var img=document.createElement('img'); img.src=src; img.alt=d.jp; img.loading='lazy';
+      fig.appendChild(img); ph.appendChild(fig);
+    });
+    pw.hidden=false;
+  } else { pw.hidden=true; }
+
+  /* 関連ニュース */
+  var nw=document.getElementById('mNewsWrap'), nl=document.getElementById('mNews');
+  nl.innerHTML='';
+  var news=(d.news||[]);
+  if(news.length){
+    news.forEach(function(n){
+      var a=document.createElement('a');
+      a.className='td-news-item'; a.href=n.url; a.target='_blank'; a.rel='noopener';
+      var t=document.createElement('span'); t.className='td-news-thumb';
+      if(n.img){ var i2=document.createElement('img'); i2.src=n.img; i2.alt=''; i2.loading='lazy'; t.appendChild(i2); }
+      else { t.classList.add('is-empty'); }
+      var meta=document.createElement('span'); meta.className='td-news-meta';
+      var dt=document.createElement('span'); dt.className='td-news-date'; dt.textContent=n.date;
+      var cg=document.createElement('span'); cg.className='td-news-cat';  cg.textContent=n.cat;
+      var ti=document.createElement('span'); ti.className='td-news-title';ti.textContent=n.title;
+      meta.appendChild(dt); meta.appendChild(cg); meta.appendChild(ti);
+      a.appendChild(t); a.appendChild(meta); nl.appendChild(a);
+    });
+    nw.hidden=false;
+  } else { nw.hidden=true; }
+
   document.getElementById('mUrl').href=d.url;
   modal.classList.add('open');
+  modal.querySelector('.modal-panel').scrollTop=0;
   document.body.style.overflow='hidden';
 }
 function closeTal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
