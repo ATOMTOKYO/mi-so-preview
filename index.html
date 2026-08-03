@@ -195,6 +195,26 @@ section{scroll-margin-top:76px}
 .news-title{display:block;margin-top:9px;font-size:14px;font-weight:400;letter-spacing:.03em;line-height:1.85;transition:color .3s var(--e)}
 .news-item:hover .news-title{color:var(--gold-deep)}
 .news-ar{display:none}
+
+/* ===== ニュース見出し前の横スライド（スターダスト式） ===== */
+.news-mq{
+  overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);
+  margin-bottom:clamp(46px,5vw,72px);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+}
+.news-mq-track{
+  display:flex;gap:12px;width:max-content;
+  animation-name:news-mq-scroll;animation-timing-function:linear;animation-iteration-count:infinite;
+}
+@keyframes news-mq-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.news-mq:hover .news-mq-track{animation-play-state:paused}
+.news-mq-item{
+  flex:0 0 auto;width:clamp(220px,24vw,330px);aspect-ratio:1.7/1;
+  overflow:hidden;background:var(--paper-2);position:relative;display:block;
+}
+.news-mq-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--e)}
+.news-mq-item:hover img{transform:scale(1.06)}
 .news-item:hover .news-ar{opacity:1;transform:none}
 
 /* ---------- Talent ---------- */
@@ -452,7 +472,23 @@ section{scroll-margin-top:76px}
 
 <!-- News -->
 <section class="sec" id="news">
-  <div class="sec-inner">
+    <div class="news-mq" aria-label="最新ニュース">
+    <div class="news-mq-track" style="animation-duration:33s">
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8cwinticket-%e3%83%9f%e3%83%83%e3%83%89%e3%83%8a%e3%82%a4%e3%83%88%e7%ab%b6%e8%bc%aa-%e6%9d%be%e9%98%aa-f2-%e5%88%9d%e6%97%a5%e3%80%8d%e3%81%ab%e5%87%ba/"><img src="assets/talent/riko-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c-abema-%e3%80%8ckeirin-advance-%e3%80%8d%e5%b0%8f%e6%9d%be%e5%b3%b6-f1-%e6%9c%80%e7%b5%82%e6%97%a5%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99/"><img src="assets/talent/riko.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e3%83%89%e3%82%b3%e3%83%a2%e8%b6%85%e5%8d%81%e4%bb%a32026%e3%81%ab%e5%b1%b1%e6%9c%ac%e5%85%89%e3%81%8c%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99%e3%80%82/"><img src="assets/talent/hikaru-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8c%e4%bd%90%e4%b9%85%e9%96%93%e5%ae%9c%e8%a1%8c%e3%81%aenobrock-tv-%e3%80%8d%e3%81%ab%e5%87%ba%e6%bc%94%e3%81%97%e3%81%a6%e3%81%be%e3%81%99%e3%80%82/"><img src="assets/talent/riko-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e3%80%8c%e6%bf%80%e6%8e%a8%e3%81%97%ef%bc%81%e4%bb%8a%e5%a4%9c%e3%82%82%e3%83%89%e3%83%ab%e7%ae%b1%e3%80%8d-%e3%83%86%e3%83%ac%e6%9d%b1%e3%81%ab%e5%90%89%e6%b2%a2%e6%9c%b1%e9%9f%b3%e3%81%8c%e5%87%ba/"><img src="assets/talent/akane.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e3%82%8a%e3%82%93%e3%82%8a%e3%82%93%e3%81%90%e3%82%8a%e3%83%bc%e3%81%9a%e3%81%be%e3%82%93%e3%81%8c%e3%80%8c%e3%83%97%e3%83%ac%e3%83%90%e3%83%88%e3%80%8dtbs-%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4/"><img src="assets/talent/rinrin-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8cwinticket-%e3%83%9f%e3%83%83%e3%83%89%e3%83%8a%e3%82%a4%e3%83%88%e7%ab%b6%e8%bc%aa-%e6%9d%be%e9%98%aa-f2-%e5%88%9d%e6%97%a5%e3%80%8d%e3%81%ab%e5%87%ba/" aria-hidden="true" tabindex="-1"><img src="assets/talent/riko-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c-abema-%e3%80%8ckeirin-advance-%e3%80%8d%e5%b0%8f%e6%9d%be%e5%b3%b6-f1-%e6%9c%80%e7%b5%82%e6%97%a5%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99/" aria-hidden="true" tabindex="-1"><img src="assets/talent/riko.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e3%83%89%e3%82%b3%e3%83%a2%e8%b6%85%e5%8d%81%e4%bb%a32026%e3%81%ab%e5%b1%b1%e6%9c%ac%e5%85%89%e3%81%8c%e5%87%ba%e6%bc%94%e8%87%b4%e3%81%97%e3%81%be%e3%81%99%e3%80%82/" aria-hidden="true" tabindex="-1"><img src="assets/talent/hikaru-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e5%8e%9f%e8%8e%89%e5%ad%90%e3%81%8c%e3%80%8c%e4%bd%90%e4%b9%85%e9%96%93%e5%ae%9c%e8%a1%8c%e3%81%aenobrock-tv-%e3%80%8d%e3%81%ab%e5%87%ba%e6%bc%94%e3%81%97%e3%81%a6%e3%81%be%e3%81%99%e3%80%82/" aria-hidden="true" tabindex="-1"><img src="assets/talent/riko-2.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e3%80%8c%e6%bf%80%e6%8e%a8%e3%81%97%ef%bc%81%e4%bb%8a%e5%a4%9c%e3%82%82%e3%83%89%e3%83%ab%e7%ae%b1%e3%80%8d-%e3%83%86%e3%83%ac%e6%9d%b1%e3%81%ab%e5%90%89%e6%b2%a2%e6%9c%b1%e9%9f%b3%e3%81%8c%e5%87%ba/" aria-hidden="true" tabindex="-1"><img src="assets/talent/akane.jpg" alt="" loading="lazy"></a>
+        <a class="news-mq-item" href="https://mi-so.jp/news/%e3%82%8a%e3%82%93%e3%82%8a%e3%82%93%e3%81%90%e3%82%8a%e3%83%bc%e3%81%9a%e3%81%be%e3%82%93%e3%81%8c%e3%80%8c%e3%83%97%e3%83%ac%e3%83%90%e3%83%88%e3%80%8dtbs-%e3%81%ab%e5%87%ba%e6%bc%94%e8%87%b4/" aria-hidden="true" tabindex="-1"><img src="assets/talent/rinrin-2.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+<div class="sec-inner">
     <div class="sec-head rv">
       <p class="sec-label">news</p>
       <h2 class="sec-title">ニュース</h2>
