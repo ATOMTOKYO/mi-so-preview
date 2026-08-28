@@ -435,7 +435,7 @@ section{scroll-margin-top:76px}
 <!-- ================= Hero mosaic（所属タレントから自動生成） ================= -->
 <section class="mv" id="top">
 <?php
-$hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>8,'ignore_sticky_posts'=>true));
+$hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>8,'post_status'=>'publish','ignore_sticky_posts'=>true));
 $hero_items = array();
 if ( $hero->have_posts() ) {
   while ( $hero->have_posts() ) { $hero->the_post();
@@ -485,6 +485,7 @@ if ( count($hero_items) <= $mid ) : ?>
 $mq = new WP_Query(array(
   'post_type'      => 'news',
   'posts_per_page' => 12,
+  'post_status'    => 'publish',
   'ignore_sticky_posts' => true,
   'meta_query'     => array( array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ) ),
 ));
@@ -523,7 +524,7 @@ if ( count( $mq_items ) > 0 ) :
     </div>
     <ul class="news-list">
 <?php
-$nq = new WP_Query(array('post_type'=>'news','posts_per_page'=>6,'ignore_sticky_posts'=>true));
+$nq = new WP_Query(array('post_type'=>'news','posts_per_page'=>6,'post_status'=>'publish','ignore_sticky_posts'=>true));
 $d=0;
 if ( $nq->have_posts() ) : while ( $nq->have_posts() ) : $nq->the_post(); ?>
       <li><a class="news-item rv" style="--d:<?php echo esc_attr( $d*0.05 ); ?>s" href="<?php the_permalink(); ?>">
@@ -557,7 +558,7 @@ if ( $nq->have_posts() ) : while ( $nq->have_posts() ) : $nq->the_post(); ?>
     </div>
     <div class="tal-grid">
 <?php
-$tq = new WP_Query(array('post_type'=>'talent','posts_per_page'=>-1,'ignore_sticky_posts'=>true));
+$tq = new WP_Query(array('post_type'=>'talent','posts_per_page'=>-1,'post_status'=>'publish','ignore_sticky_posts'=>true));
 $d=0;
 if ( $tq->have_posts() ) : while ( $tq->have_posts() ) : $tq->the_post();
   $jp = function_exists('get_field') ? get_field('talent_name') : get_the_title();
