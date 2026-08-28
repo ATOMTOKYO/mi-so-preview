@@ -133,6 +133,17 @@ section{scroll-margin-top:76px}
 /* タイル総数に応じた最適配置（写真4枚＝5タイルならロゴを中心に横一列） */
 .mv-grid[data-tiles="5"]{grid-template-columns:repeat(5,1fr);max-width:1160px}
 .mv-grid[data-tiles="7"]{grid-template-columns:repeat(7,1fr)}
+/* 写真4枚（＝5タイル）はPC/タブレットで「写真2×2＋中央にロゴ」の2段組み。スマホは下の720px以下ブロックで従来通り */
+@media(min-width:721px){
+  .mv-grid[data-tiles="5"]{grid-template-columns:1fr .70fr 1fr;max-width:1160px}
+  .mv-grid[data-tiles="5"] > *:nth-child(1){grid-column:1;grid-row:1}
+  .mv-grid[data-tiles="5"] > *:nth-child(2){grid-column:1;grid-row:2}
+  .mv-grid[data-tiles="5"] > *:nth-child(3){grid-column:2;grid-row:1/span 2}
+  .mv-grid[data-tiles="5"] > *:nth-child(4){grid-column:3;grid-row:1}
+  .mv-grid[data-tiles="5"] > *:nth-child(5){grid-column:3;grid-row:2}
+  .mv-grid[data-tiles="5"] .mv-tile{aspect-ratio:3/2}
+  .mv-grid[data-tiles="5"] .mv-logo-tile{aspect-ratio:auto}
+}
 .mv-tile{
   position:relative;overflow:hidden;aspect-ratio:1/1;cursor:pointer;background:var(--paper-2);
   border:0;padding:0;text-align:inherit;font:inherit;
