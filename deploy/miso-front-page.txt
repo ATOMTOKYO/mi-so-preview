@@ -130,6 +130,9 @@ section{scroll-margin-top:76px}
   display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px;
   max-width:900px;margin:0 auto;
 }
+/* タイル総数に応じた最適配置（写真4枚＝5タイルならロゴを中心に横一列） */
+.mv-grid[data-tiles="5"]{grid-template-columns:repeat(5,1fr);max-width:1160px}
+.mv-grid[data-tiles="7"]{grid-template-columns:repeat(7,1fr)}
 .mv-tile{
   position:relative;overflow:hidden;aspect-ratio:1/1;cursor:pointer;background:var(--paper-2);
   border:0;padding:0;text-align:inherit;font:inherit;
@@ -370,6 +373,10 @@ section{scroll-margin-top:76px}
   .hdr-nav a.nlink,.hdr-cta{display:none}
   .burger{display:block}
   .mv-grid{grid-template-columns:repeat(3,1fr);gap:4px;padding:0 4px}
+  /* 写真4枚のときは 2列＋中央ロゴ帯 で「ロゴを囲む」形に */
+  .mv-grid[data-tiles="5"]{grid-template-columns:repeat(2,1fr)}
+  .mv-grid[data-tiles="5"] .mv-logo-tile{grid-column:1/-1;aspect-ratio:2/.72}
+  .mv-grid[data-tiles="7"]{grid-template-columns:repeat(3,1fr)}
   .mv-logo-tile .lm{width:78%}
   .mv-logo-tile .ls{font-size:6.5px;letter-spacing:.22em}
   .mv-foot{flex-direction:column;align-items:flex-start;gap:16px}
@@ -427,7 +434,6 @@ section{scroll-margin-top:76px}
 
 <!-- ================= Hero mosaic（所属タレントから自動生成） ================= -->
 <section class="mv" id="top">
-  <div class="mv-grid" id="mvGrid">
 <?php
 $hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>8,'ignore_sticky_posts'=>true));
 $hero_items = array();
@@ -442,8 +448,13 @@ if ( $hero->have_posts() ) {
   }
 }
 wp_reset_postdata();
-$mid = min( 4, count($hero_items) );   /* ロゴタイルを中央に挿む位置 */
-$idx = 0;
+/* ロゴタイルは常に真ん中へ。タイル総数（写真＋ロゴ）で並べ方を切り替える */
+$hero_n   = count( $hero_items );
+$mid      = (int) floor( $hero_n / 2 );
+$mv_tiles = $hero_n + 1;
+?>
+  <div class="mv-grid" id="mvGrid" data-tiles="<?php echo esc_attr( $mv_tiles ); ?>">
+<?php
 foreach ( $hero_items as $i => $t ) :
   if ( $i === $mid ) : ?>
     <div class="mv-tile mv-logo-tile"><img class="lm" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo.png" alt="Mi-So"><span class="ls">TALENT&nbsp;MANAGEMENT</span></div>
