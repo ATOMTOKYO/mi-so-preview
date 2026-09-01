@@ -156,16 +156,16 @@ section{scroll-margin-top:76px}
   position:relative;overflow:hidden;background:var(--paper-2);
   aspect-ratio:3/4;height:min(68vh,644px);width:auto;
 }
-.mv-slide{
-  position:absolute;inset:0;display:block;opacity:0;pointer-events:none;
-  transition:opacity .9s var(--e);
-}
-.mv-slide.is-active{opacity:1;pointer-events:auto;z-index:2}
+.mv-slide{position:absolute;inset:0;display:block;opacity:0;z-index:1;pointer-events:none}
+.mv-slide.is-active{opacity:1;z-index:2;pointer-events:auto}
+/* 切り替え中は「前の写真」だけを上に重ねて消す。両方が半透明になると背景が透けて白っぽくなるため */
+.mv-slide.is-out{opacity:1;z-index:3}
+.mv-slide.is-out.is-out-go{opacity:0;transition:opacity .9s var(--e)}
 .mv-slide img{
   width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;
-  transform:scale(1.055);
+  transform:scale(1);
 }
-.mv-slide.is-active img{animation:mvkb 5.4s var(--e) forwards}
+.mv-slide.is-active img,.mv-slide.is-out img{animation:mvkb 5.4s var(--e) forwards}
 @keyframes mvkb{from{transform:scale(1.055)}to{transform:scale(1)}}
 .mv-stage::after{
   content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
@@ -176,10 +176,14 @@ section{scroll-margin-top:76px}
 .mv-names{position:relative;min-height:78px}
 .mv-name{
   position:absolute;left:0;bottom:0;display:block;text-decoration:none;
-  opacity:0;transform:translateY(10px);pointer-events:none;
-  transition:opacity .6s var(--e),transform .6s var(--e);
+  opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .26s var(--e),transform .26s var(--e);
 }
-.mv-name.is-active{opacity:1;transform:none;pointer-events:auto}
+/* 前の名前が消えきってから次を出す（重なって二重に見えないように） */
+.mv-name.is-active{
+  opacity:1;transform:none;pointer-events:auto;
+  transition:opacity .5s var(--e) .28s,transform .5s var(--e) .28s;
+}
 .mn-jp{
   display:block;font-size:clamp(21px,2.6vw,32px);font-weight:500;
   letter-spacing:.1em;color:var(--ink);line-height:1.35;
@@ -796,6 +800,13 @@ setTimeout(finishLoader, 3000);
   }
   function show(n){
     n = (n + slides.length) % slides.length;
+    var prev = slides[cur];
+    if(prev && n !== cur){
+      prev.classList.add('is-out');
+      void prev.offsetWidth;
+      prev.classList.add('is-out-go');
+      (function(el){ setTimeout(function(){ el.classList.remove('is-out','is-out-go'); }, 1000); })(prev);
+    }
     cur = n;
     setActive(slides, n);
     setActive(names, n);
