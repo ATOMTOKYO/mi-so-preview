@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <?php wp_head(); ?>
-<noscript><style>.rv{opacity:1!important;transform:none!important}.mv-tile{opacity:1!important;transform:none!important}.loader{display:none!important}</style></noscript>
+<noscript><style>.rv{opacity:1!important;transform:none!important}.mv-solo{opacity:1!important;transform:none!important}.loader{display:none!important}</style></noscript>
 <style>
 /* ===== Mi-So リニューアル用スタイル（このページ限定） ===== */
 .front-new *,.front-new *::before,.front-new *::after{margin:0;padding:0;box-sizing:border-box}
@@ -124,61 +124,95 @@ section{scroll-margin-top:76px}
 .mmenu a:nth-child(5){transition-delay:.32s}.mmenu a:nth-child(6){transition-delay:.38s}
 .mmenu .mm-jp{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.3em;color:var(--gray);text-align:center;margin-top:-2px}
 
-/* ---------- Hero mosaic ---------- */
+/* ---------- Hero solo slideshow（1人ずつ切り替え） ---------- */
 .mv{padding-top:76px;background:var(--paper)}
-.mv-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px;
-  max-width:900px;margin:0 auto;
+.mv-solo{
+  padding:clamp(8px,2vw,22px) 0 0;
+  opacity:0;transform:translateY(12px);
+  transition:opacity 1s var(--e),transform 1s var(--e);
 }
-/* タイル総数に応じた最適配置（写真4枚＝5タイルならロゴを中心に横一列） */
-.mv-grid[data-tiles="5"]{grid-template-columns:repeat(5,1fr);max-width:1160px}
-.mv-grid[data-tiles="7"]{grid-template-columns:repeat(7,1fr)}
-/* 写真4枚（＝5タイル）はPC/タブレットで「写真2×2＋中央にロゴ」の2段組み。スマホは下の720px以下ブロックで従来通り */
-@media(min-width:721px){
-  .mv-grid[data-tiles="5"]{grid-template-columns:1fr .70fr 1fr;max-width:1160px}
-  .mv-grid[data-tiles="5"] > *:nth-child(1){grid-column:1;grid-row:1}
-  .mv-grid[data-tiles="5"] > *:nth-child(2){grid-column:1;grid-row:2}
-  .mv-grid[data-tiles="5"] > *:nth-child(3){grid-column:2;grid-row:1/span 2}
-  .mv-grid[data-tiles="5"] > *:nth-child(4){grid-column:3;grid-row:1}
-  .mv-grid[data-tiles="5"] > *:nth-child(5){grid-column:3;grid-row:2}
-  .mv-grid[data-tiles="5"] .mv-tile{aspect-ratio:3/2}
-  .mv-grid[data-tiles="5"] .mv-logo-tile{aspect-ratio:auto}
+.mv-solo.in{opacity:1;transform:none}
+.mv-solo-inner{
+  display:grid;gap:clamp(24px,3.4vw,56px);
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:1fr 1fr;
+  grid-template-areas:"brand stage" "meta stage";
+  max-width:1020px;margin:0 auto;padding:0 clamp(20px,4vw,48px);
 }
-.mv-tile{
-  position:relative;overflow:hidden;aspect-ratio:1/1;cursor:pointer;background:var(--paper-2);
-  border:0;padding:0;text-align:inherit;font:inherit;
-  opacity:0;transform:scale(.97);transition:opacity 1s var(--e),transform 1s var(--e);
+/* 左側（ロゴ＋名前）は写真に対して上下中央に置く */
+.mv-brand{grid-area:brand;align-self:end}
+.mv-meta{grid-area:meta;align-self:start;padding-top:clamp(26px,3.4vw,48px)}
+.mv-stage{grid-area:stage}
+
+/* ロゴ */
+.mv-brand-logo{display:block;width:clamp(158px,17.5vw,246px);height:auto}
+.mv-brand-sub{
+  display:block;margin-top:12px;font-size:9.5px;letter-spacing:.44em;
+  color:var(--gold);font-weight:500;line-height:2;
 }
-.mv-tile.in{opacity:1;transform:none}
-.mv-tile img{
-  width:100%;height:100%;object-fit:cover;object-position:50% 22%;
-  animation:kb 16s ease-in-out infinite alternate;
+
+/* 写真ステージ */
+.mv-stage{
+  position:relative;overflow:hidden;background:var(--paper-2);
+  aspect-ratio:3/4;height:min(68vh,644px);width:auto;
 }
-.mv-tile:nth-child(odd) img{animation-duration:19s}
-.mv-tile:nth-child(3n) img{animation-delay:-6s}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.08)}}
-.mv-veil{
-  position:absolute;inset:0;background:rgba(150,127,82,.86);
-  display:flex;flex-direction:column;justify-content:flex-end;padding:22px 24px;
-  opacity:0;transition:opacity .45s var(--e);
+.mv-slide{
+  position:absolute;inset:0;display:block;opacity:0;pointer-events:none;
+  transition:opacity .9s var(--e);
 }
-.mv-tile:hover .mv-veil,.mv-tile:focus-visible .mv-veil{opacity:1}
-.mv-veil .vn{color:#fff;font-weight:500;font-size:17px;letter-spacing:.1em;transform:translateY(10px);transition:transform .45s var(--e)}
-.mv-veil .ve{color:rgba(255,255,255,.85);font-family:var(--serif);font-style:italic;font-size:14px;letter-spacing:.12em;transform:translateY(10px);transition:transform .45s var(--e) .05s}
-.mv-tile:hover .vn,.mv-tile:hover .ve{transform:none}
-.mv-veil .va{
-  position:absolute;right:20px;bottom:20px;width:34px;height:34px;border:1px solid rgba(255,255,255,.75);
-  border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;
+.mv-slide.is-active{opacity:1;pointer-events:auto;z-index:2}
+.mv-slide img{
+  width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;
+  transform:scale(1.055);
 }
-.mv-logo-tile{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-  background:var(--paper);cursor:default;
+.mv-slide.is-active img{animation:mvkb 5.4s var(--e) forwards}
+@keyframes mvkb{from{transform:scale(1.055)}to{transform:scale(1)}}
+.mv-stage::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(23,23,27,.05);
 }
-.mv-logo-tile .lm{width:clamp(130px,15vw,200px);height:auto;display:block}
-.mv-logo-tile .ls{font-size:9px;letter-spacing:.44em;color:var(--gold);font-weight:500;text-align:center;line-height:2}
+
+/* 名前 */
+.mv-names{position:relative;min-height:78px}
+.mv-name{
+  position:absolute;left:0;bottom:0;display:block;text-decoration:none;
+  opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .6s var(--e),transform .6s var(--e);
+}
+.mv-name.is-active{opacity:1;transform:none;pointer-events:auto}
+.mn-jp{
+  display:block;font-size:clamp(21px,2.6vw,32px);font-weight:500;
+  letter-spacing:.1em;color:var(--ink);line-height:1.35;
+}
+.mn-en{
+  display:block;margin-top:7px;font-family:var(--serif);font-style:italic;
+  font-size:clamp(13px,1.5vw,17px);letter-spacing:.14em;color:var(--gold-deep);
+}
+.mn-go{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;margin-top:14px;border:1px solid var(--line);border-radius:50%;
+  color:var(--gold);font-size:13px;transition:background .4s var(--e),border-color .4s var(--e),color .4s var(--e),transform .4s var(--e);
+}
+.mv-name:hover .mn-go,.mv-name:focus-visible .mn-go{background:var(--gold);border-color:var(--gold);color:#fff;transform:translateX(4px)}
+
+/* インジケーター（残り時間バー） */
+.mv-dots{display:flex;gap:9px;margin-top:24px}
+.mv-dot{
+  appearance:none;-webkit-appearance:none;border:0;padding:10px 0;background:none;
+  cursor:pointer;width:38px;display:block;
+}
+.mv-dot i{display:block;width:100%;height:2px;background:var(--line);position:relative;overflow:hidden}
+.mv-dot i::after{
+  content:"";position:absolute;inset:0;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+}
+.mv-dot.is-active i::after{animation:mvbar 3s linear forwards}
+.mv-solo.is-paused .mv-dot.is-active i::after{animation-play-state:paused}
+@keyframes mvbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
 .mv-foot{
   display:flex;align-items:center;justify-content:space-between;gap:18px;
-  padding:20px clamp(20px,4vw,48px) 0;
+  max-width:1020px;margin:0 auto;padding:22px clamp(20px,4vw,48px) 0;
 }
 .mv-tag{font-size:clamp(15px,2vw,19px);font-weight:500;letter-spacing:.14em}
 .mv-tag em{font-family:var(--serif);font-style:italic;color:var(--gold-deep);letter-spacing:.08em;font-size:.92em;margin-left:14px}
@@ -383,21 +417,25 @@ section{scroll-margin-top:76px}
 @media(max-width:720px){
   .hdr-nav a.nlink,.hdr-cta{display:none}
   .burger{display:block}
-  .mv-grid{grid-template-columns:repeat(3,1fr);gap:4px;padding:0 4px}
-  /* 写真4枚のときは 2列＋中央ロゴ帯 で「ロゴを囲む」形に */
-  .mv-grid[data-tiles="5"]{grid-template-columns:repeat(2,1fr)}
-  .mv-grid[data-tiles="5"] .mv-logo-tile{grid-column:1/-1;aspect-ratio:2/.72}
-  .mv-grid[data-tiles="7"]{grid-template-columns:repeat(3,1fr)}
-  /* 写真5枚のときも 2列＋中央ロゴ帯 を維持し、余った1枚は中央に置く */
-  .mv-grid[data-tiles="6"]{grid-template-columns:repeat(2,1fr)}
-  .mv-grid[data-tiles="6"] > *:nth-child(1){grid-column:1;grid-row:1}
-  .mv-grid[data-tiles="6"] > *:nth-child(3){grid-column:2;grid-row:1}
-  .mv-grid[data-tiles="6"] .mv-logo-tile{grid-column:1/-1;grid-row:2;aspect-ratio:2/.72}
-  .mv-grid[data-tiles="6"] > *:nth-child(4){grid-column:1;grid-row:3}
-  .mv-grid[data-tiles="6"] > *:nth-child(5){grid-column:2;grid-row:3}
-  .mv-grid[data-tiles="6"] > *:nth-child(6){grid-column:1/-1;grid-row:4;justify-self:center;width:calc(50% - 2px)}
-  .mv-logo-tile .lm{width:78%}
-  .mv-logo-tile .ls{font-size:6.5px;letter-spacing:.22em}
+  /* ヒーロー：ロゴ → 写真 → 名前 の縦積み */
+  .mv-solo-inner{
+    grid-template-columns:1fr;grid-template-rows:auto auto auto;
+    grid-template-areas:"brand" "stage" "meta";
+    gap:16px;padding:0 20px;
+  }
+  .mv-brand{text-align:center}
+  .mv-brand-logo{width:min(44vw,188px);margin:0 auto}
+  /* ヘッダーのロゴ直下に同じ英字が並んで重複するため、スマホでは省く */
+  .mv-brand-sub{display:none}
+  .mv-stage{aspect-ratio:4/5;height:auto;max-height:min(56vh,520px);width:100%}
+  .mv-meta{align-self:auto;padding-bottom:0}
+  .mv-names{min-height:64px;text-align:center}
+  .mv-name{left:0;right:0;text-align:center}
+  .mn-jp{font-size:20px}
+  .mn-en{font-size:13px;margin-top:5px}
+  .mn-go{margin-top:11px;width:28px;height:28px}
+  .mv-dots{justify-content:center;margin-top:14px;gap:8px}
+  .mv-dot{width:30px;padding:9px 0}
   .mv-foot{flex-direction:column;align-items:flex-start;gap:16px}
   .tal-grid{grid-template-columns:repeat(2,1fr)}
   .news-list{grid-template-columns:repeat(2,1fr);gap:24px 14px}
@@ -408,13 +446,20 @@ section{scroll-margin-top:76px}
 }
 /* ===== PC(961px以上)のみ：ヒーローを本文と同じ1160px幅に揃え、タイルを横長にして主張を抑える
    ※スマホ(720px以下)とニュースには一切影響しません ===== */
+@media(min-width:721px) and (max-width:960px){
+  /* タブレット：写真をやや控えめにして左のロゴ・名前と釣り合わせる */
+  .mv-stage{height:min(56vh,486px)}
+  .mv-brand-logo{width:clamp(140px,19vw,190px)}
+  .mv-names{min-height:70px}
+}
 @media(min-width:961px){
-  .mv-grid{max-width:1160px}
-  .mv-tile{aspect-ratio:4/3}
+  .mv-solo{padding-top:clamp(10px,2.2vw,30px)}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .rv,.mv-tile{opacity:1;transform:none}
+  .rv,.mv-solo{opacity:1;transform:none}
+  /* アニメーションを止める設定の端末でも、今どの人を表示中かは分かるようにする */
+  .mv-dot.is-active i{background:var(--gold)}
 }
 
 </style>
@@ -451,7 +496,7 @@ section{scroll-margin-top:76px}
   <a href="<?php echo esc_url( home_url('/entry/') ); ?>">audition<span class="mm-jp">モデル・タレント応募</span></a>
 </div>
 
-<!-- ================= Hero mosaic（所属タレントから自動生成） ================= -->
+<!-- ================= Hero（所属タレントを1人ずつ表示・3秒で切替） ================= -->
 <section class="mv" id="top">
 <?php
 $hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>8,'post_status'=>'publish','ignore_sticky_posts'=>true));
@@ -459,38 +504,58 @@ $hero_items = array();
 if ( $hero->have_posts() ) {
   while ( $hero->have_posts() ) { $hero->the_post();
     $hero_items[] = array(
-      'link'  => get_permalink(),
-      'thumb' => get_the_post_thumbnail( get_the_ID(), 'large', array('alt'=>'') ),
-      'jp'    => function_exists('get_field') ? get_field('talent_name') : get_the_title(),
-      'en'    => function_exists('get_field') ? get_field('talent_name_roma') : '',
+      'id'   => get_the_ID(),
+      'link' => get_permalink(),
+      'jp'   => function_exists('get_field') ? get_field('talent_name') : get_the_title(),
+      'en'   => function_exists('get_field') ? get_field('talent_name_roma') : '',
     );
   }
 }
 wp_reset_postdata();
-/* ロゴタイルは常に真ん中へ。タイル総数（写真＋ロゴ）で並べ方を切り替える */
-$hero_n   = count( $hero_items );
-$mid      = ( 5 === $hero_n ) ? 1 : (int) floor( $hero_n / 2 );
-/* ↑写真5枚は3列2段になるため、視覚的な中心＝上段まん中（index 1）にロゴを置く */
-$mv_tiles = $hero_n + 1;
+$mv_logo = get_template_directory_uri() . '/images/logo.png';
 ?>
-  <div class="mv-grid" id="mvGrid" data-tiles="<?php echo esc_attr( $mv_tiles ); ?>">
-<?php
-foreach ( $hero_items as $i => $t ) :
-  if ( $i === $mid ) : ?>
-    <div class="mv-tile mv-logo-tile"><img class="lm" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo.png" alt="Mi-So"><span class="ls">TALENT&nbsp;MANAGEMENT</span></div>
-  <?php endif; ?>
-    <a class="mv-tile" href="<?php echo esc_url( $t['link'] ); ?>">
-      <?php echo $t['thumb']; ?>
-      <span class="mv-veil">
-        <span class="vn"><?php echo esc_html( $t['jp'] ); ?></span>
-        <span class="ve"><?php echo esc_html( $t['en'] ); ?></span>
-        <span class="va">&rarr;</span>
-      </span>
-    </a>
-<?php endforeach;
-if ( count($hero_items) <= $mid ) : ?>
-    <div class="mv-tile mv-logo-tile"><img class="lm" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo.png" alt="Mi-So"><span class="ls">TALENT&nbsp;MANAGEMENT</span></div>
+  <div class="mv-solo" id="mvSolo">
+    <div class="mv-solo-inner">
+
+      <div class="mv-brand">
+        <img class="mv-brand-logo" src="<?php echo esc_url( $mv_logo ); ?>" alt="Mi-So">
+        <span class="mv-brand-sub">TALENT&nbsp;MANAGEMENT</span>
+      </div>
+
+      <div class="mv-stage" id="mvStage">
+<?php foreach ( $hero_items as $i => $t ) :
+        $img_attr = array( 'alt' => $t['jp'] );
+        if ( 0 === $i ) { $img_attr['loading'] = 'eager'; $img_attr['fetchpriority'] = 'high'; }
+?>
+        <a class="mv-slide<?php echo 0 === $i ? ' is-active' : ''; ?>" href="<?php echo esc_url( $t['link'] ); ?>"
+           tabindex="<?php echo 0 === $i ? '0' : '-1'; ?>" aria-hidden="<?php echo 0 === $i ? 'false' : 'true'; ?>">
+          <?php echo get_the_post_thumbnail( $t['id'], 'large', $img_attr ); ?>
+        </a>
+<?php endforeach; ?>
+      </div>
+
+      <div class="mv-meta">
+        <div class="mv-names">
+<?php foreach ( $hero_items as $i => $t ) : ?>
+          <a class="mv-name<?php echo 0 === $i ? ' is-active' : ''; ?>" href="<?php echo esc_url( $t['link'] ); ?>"
+             tabindex="<?php echo 0 === $i ? '0' : '-1'; ?>" aria-hidden="<?php echo 0 === $i ? 'false' : 'true'; ?>">
+            <span class="mn-jp"><?php echo esc_html( $t['jp'] ); ?></span>
+            <span class="mn-en"><?php echo esc_html( $t['en'] ); ?></span>
+            <span class="mn-go" aria-hidden="true">&rarr;</span>
+          </a>
+<?php endforeach; ?>
+        </div>
+<?php if ( count( $hero_items ) > 1 ) : ?>
+        <div class="mv-dots" id="mvDots">
+<?php foreach ( $hero_items as $i => $t ) : ?>
+          <button type="button" class="mv-dot<?php echo 0 === $i ? ' is-active' : ''; ?>" data-i="<?php echo (int) $i; ?>"
+                  aria-label="<?php echo esc_attr( $t['jp'] ); ?>"><i></i></button>
+<?php endforeach; ?>
+        </div>
 <?php endif; ?>
+      </div>
+
+    </div>
   </div>
   <div class="mv-foot">
     <p class="mv-tag rv">その輝きを、もっと遠くへ。<em>Mi-So inc.</em></p>
@@ -702,11 +767,75 @@ var loaderDone=false;
 function finishLoader(){
   if(loaderDone) return; loaderDone=true;
   var l=document.getElementById('loader'); if(l) l.classList.add('done');
-  var tiles=document.querySelectorAll('.mv-tile');
-  Array.prototype.forEach.call(tiles,function(t,i){ setTimeout(function(){ t.classList.add('in'); }, 90*i); });
+  var solo=document.getElementById('mvSolo'); if(solo) solo.classList.add('in');
 }
 window.addEventListener('load', function(){ setTimeout(finishLoader, 900); });
 setTimeout(finishLoader, 3000);
+
+/* ---------- Hero slideshow（1人ずつ・3秒で切替） ---------- */
+(function(){
+  var root = document.getElementById('mvSolo');
+  if(!root) return;
+  var slides = root.querySelectorAll('.mv-slide');
+  var names  = root.querySelectorAll('.mv-name');
+  var dots   = root.querySelectorAll('.mv-dot');
+  if(slides.length < 2) return;
+
+  var INTERVAL = 3000;
+  var cur = 0, timer = null, paused = false;
+
+  function setActive(list, n){
+    Array.prototype.forEach.call(list, function(el, i){
+      var on = (i === n);
+      el.classList.toggle('is-active', on);
+      if(el.tagName === 'A'){
+        el.setAttribute('tabindex', on ? '0' : '-1');
+        el.setAttribute('aria-hidden', on ? 'false' : 'true');
+      }
+    });
+  }
+  function show(n){
+    n = (n + slides.length) % slides.length;
+    cur = n;
+    setActive(slides, n);
+    setActive(names, n);
+    /* バーのアニメーションを毎回リスタートさせる */
+    Array.prototype.forEach.call(dots, function(d){ d.classList.remove('is-active'); });
+    var d = dots[n];
+    if(d){ void d.offsetWidth; d.classList.add('is-active'); }
+  }
+  function start(){ stop(); if(!paused) timer = setInterval(function(){ show(cur + 1); }, INTERVAL); }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+
+  Array.prototype.forEach.call(dots, function(d){
+    d.addEventListener('click', function(){
+      var n = parseInt(d.getAttribute('data-i'), 10) || 0;
+      if(n === cur) return;
+      show(n); start();
+    });
+  });
+
+  /* マウスが乗っている間だけ止める（指で操作する端末では止めない） */
+  if(window.matchMedia && window.matchMedia('(hover:hover)').matches){
+    root.addEventListener('mouseenter', function(){ paused = true; root.classList.add('is-paused'); stop(); });
+    root.addEventListener('mouseleave', function(){ paused = false; root.classList.remove('is-paused'); start(); });
+  }
+  /* 別タブに行っている間は進めない */
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){ stop(); } else if(!paused){ show(cur); start(); }
+  });
+
+  /* 2枚目以降を先読みして、切り替わりの瞬間に白く抜けないようにする */
+  window.addEventListener('load', function(){
+    Array.prototype.forEach.call(slides, function(sl){
+      var im = sl.querySelector('img');
+      if(im){ im.setAttribute('loading','eager'); im.setAttribute('decoding','sync'); }
+    });
+  });
+
+  show(0);
+  start();
+})();
 
 /* ---------- Header hide/show ---------- */
 var hdr=document.getElementById('hdr'), lastY=0;
