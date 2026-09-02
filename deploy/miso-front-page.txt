@@ -503,7 +503,8 @@ section{scroll-margin-top:76px}
 <!-- ================= Hero（所属タレントを1人ずつ表示・3秒で切替） ================= -->
 <section class="mv" id="top">
 <?php
-$hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>8,'post_status'=>'publish','ignore_sticky_posts'=>true));
+/* トップは1名のみ表示（所属タレント一覧の先頭の方＝管理画面のドラッグ並び替えで変更できます） */
+$hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>1,'post_status'=>'publish','ignore_sticky_posts'=>true));
 $hero_items = array();
 if ( $hero->have_posts() ) {
   while ( $hero->have_posts() ) { $hero->the_post();
@@ -713,7 +714,6 @@ if ( $tq->have_posts() ) : while ( $tq->have_posts() ) : $tq->the_post();
       </div>
       <dl class="comp-dl rv" style="--d:.1s">
         <div class="row"><dt>会社名</dt><dd>株式会社Mi-So</dd></div>
-        <div class="row"><dt>設立</dt><dd>2021年8月18日</dd></div>
         <div class="row"><dt>所在地</dt><dd>〒150-0022<br>東京都渋谷区恵比寿南1-1-1 ヒューマックス恵比寿ビル8階 818</dd></div>
       </dl>
     </div>
