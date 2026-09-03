@@ -499,6 +499,8 @@ if ( $hero->have_posts() ) {
   while ( $hero->have_posts() ) { $hero->the_post();
     $hero_items[] = array(
       'id'   => get_the_ID(),
+      /* トップ専用の画像が設定されていればそれを使う（未設定ならアイキャッチ） */
+      'top'  => function_exists('get_field') ? get_field('talent_top_photo') : '',
       'link' => get_permalink(),
       'jp'   => function_exists('get_field') ? get_field('talent_name') : get_the_title(),
       'en'   => function_exists('get_field') ? get_field('talent_name_roma') : '',
@@ -518,7 +520,10 @@ $mv_logo = get_template_directory_uri() . '/images/logo.png';
 ?>
       <a class="mv-slide<?php echo 0 === $i ? ' is-active' : ''; ?>" href="<?php echo esc_url( $t['link'] ); ?>"
          tabindex="<?php echo 0 === $i ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr( $t['jp'] ); ?>">
-        <?php echo get_the_post_thumbnail( $t['id'], 'large', $img_attr ); ?>
+        <?php
+          if ( ! empty( $t['top'] ) ) { echo wp_get_attachment_image( $t['top'], 'large', false, $img_attr ); }
+          else { echo get_the_post_thumbnail( $t['id'], 'large', $img_attr ); }
+        ?>
       </a>
 <?php endforeach; ?>
     </div>
