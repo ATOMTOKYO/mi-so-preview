@@ -124,90 +124,105 @@ section{scroll-margin-top:76px}
 .mmenu a:nth-child(5){transition-delay:.32s}.mmenu a:nth-child(6){transition-delay:.38s}
 .mmenu .mm-jp{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.3em;color:var(--gray);text-align:center;margin-top:-2px}
 
-/* ---------- Hero key visual（1名を大きく見せるトップ） ---------- */
-.mv{background:var(--paper)}
+/* ---------- Hero solo slideshow（1人ずつ切り替え） ---------- */
+.mv{padding-top:76px;background:var(--paper)}
 .mv-solo{
-  position:relative;display:grid;
-  grid-template-columns:minmax(0,44fr) minmax(0,56fr);
-  min-height:100vh;min-height:100svh;
-  opacity:0;transition:opacity 1.1s var(--e);
+  padding:clamp(8px,2vw,22px) 0 0;
+  opacity:0;transform:translateY(12px);
+  transition:opacity 1s var(--e),transform 1s var(--e);
 }
-.mv-solo.in{opacity:1}
+.mv-solo.in{opacity:1;transform:none}
+.mv-solo-inner{
+  display:grid;gap:clamp(24px,3.4vw,56px);
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:1fr 1fr;
+  grid-template-areas:"brand stage" "meta stage";
+  max-width:1020px;margin:0 auto;padding:0 clamp(20px,4vw,48px);
+}
+/* 左側（ロゴ＋名前）は写真に対して上下中央に置く */
+.mv-brand{grid-area:brand;align-self:end}
+.mv-meta{grid-area:meta;align-self:start;padding-top:clamp(26px,3.4vw,48px)}
+.mv-stage{grid-area:stage}
 
-/* 左：コピー面（用紙色。ヘッダーのロゴが乗る側） */
-.mv-copy{
-  grid-column:1;grid-row:1;position:relative;z-index:6;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:calc(76px + clamp(18px,3vw,46px)) clamp(24px,3.6vw,56px) clamp(26px,3vw,44px) clamp(24px,5vw,76px);
-}
-.mv-brand-logo{
-  display:block;width:clamp(150px,15.5vw,224px);height:auto;
-  opacity:0;transform:translateY(14px);
-  transition:opacity .9s var(--e) .15s,transform .9s var(--e) .15s;
-}
+/* ロゴ */
+.mv-brand-logo{display:block;width:clamp(158px,17.5vw,246px);height:auto}
 .mv-brand-sub{
-  display:block;margin-top:11px;font-size:9.5px;letter-spacing:.44em;
+  display:block;margin-top:12px;font-size:9.5px;letter-spacing:.44em;
   color:var(--gold);font-weight:500;line-height:2;
-  opacity:0;transform:translateY(14px);
-  transition:opacity .9s var(--e) .25s,transform .9s var(--e) .25s;
 }
-/* 主役はキャッチコピー（＝プロフィールカードに見せない） */
-.mv-lead{
-  margin-top:clamp(26px,3.6vw,52px);
-  font-size:clamp(26px,3.5vw,47px);font-weight:500;line-height:1.62;
-  letter-spacing:.1em;color:var(--ink);
-  opacity:0;transform:translateY(16px);
-  transition:opacity 1s var(--e) .38s,transform 1s var(--e) .38s;
-}
-.mv-lead em{
-  display:block;margin-top:14px;font-family:var(--serif);font-style:italic;
-  font-size:.42em;letter-spacing:.14em;color:var(--gold-deep);font-weight:500;
-}
-/* 名前は控えめに（トップの主役は写真とコピー） */
-.mv-person{
-  display:inline-flex;align-items:baseline;gap:14px;width:fit-content;
-  margin-top:clamp(30px,4vw,56px);padding-top:16px;
-  border-top:1px solid var(--line);text-decoration:none;
-  opacity:0;transform:translateY(16px);
-  transition:opacity 1s var(--e) .5s,transform 1s var(--e) .5s;
-}
-.mp-jp{font-size:clamp(14px,1.25vw,17px);font-weight:500;letter-spacing:.14em;color:var(--ink)}
-.mp-en{font-family:var(--serif);font-style:italic;font-size:clamp(12px,1.05vw,14px);letter-spacing:.14em;color:var(--gray)}
-.mp-go{
-  font-size:12px;color:var(--gold);letter-spacing:0;
-  transition:transform .4s var(--e);display:inline-block;
-}
-.mv-person:hover .mp-go{transform:translateX(5px)}
-.mv-person:hover .mp-jp{color:var(--gold-deep)}
-.mv-solo.in .mv-brand-logo,
-.mv-solo.in .mv-brand-sub,
-.mv-solo.in .mv-lead,
-.mv-solo.in .mv-person{opacity:1;transform:none}
 
-/* 右：写真面（画面の端まで抜く＝額縁に入れない） */
-.mv-visual{grid-column:2;grid-row:1;position:relative;overflow:hidden;background:var(--paper-2)}
+/* 写真ステージ */
+.mv-stage{
+  position:relative;overflow:hidden;background:var(--paper-2);
+  aspect-ratio:3/4;height:min(68vh,644px);width:auto;
+}
 .mv-slide{position:absolute;inset:0;display:block;opacity:0;z-index:1;pointer-events:none}
 .mv-slide.is-active{opacity:1;z-index:2;pointer-events:auto}
+/* 切り替え中は「前の写真」だけを上に重ねて消す。両方が半透明になると背景が透けて白っぽくなるため */
 .mv-slide.is-out{opacity:1;z-index:3}
 .mv-slide.is-out.is-out-go{opacity:0;transition:opacity .9s var(--e)}
-.mv-slide img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;display:block}
-.mv-slide.is-active img,.mv-slide.is-out img{animation:mvkb 9s var(--e) forwards}
-@keyframes mvkb{from{transform:scale(1.07)}to{transform:scale(1)}}
-/* ヘッダーのメニューが写真に重なる部分だけ、ごく淡く起こして可読性を確保 */
-.mv-visual::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:150px;z-index:4;pointer-events:none;
-  background:linear-gradient(180deg,rgba(250,249,246,.62),rgba(250,249,246,0));
+.mv-slide img{
+  width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;
+  transform:scale(1);
+}
+.mv-slide.is-active img,.mv-slide.is-out img{animation:mvkb 5.4s var(--e) forwards}
+@keyframes mvkb{from{transform:scale(1.055)}to{transform:scale(1)}}
+.mv-stage::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(23,23,27,.05);
 }
 
-/* スクロール表示 */
-.mv-scroll{
-  position:absolute;left:clamp(24px,5vw,76px);bottom:clamp(22px,3vw,38px);z-index:6;
-  display:flex;align-items:center;gap:10px;font-size:9.5px;letter-spacing:.34em;color:var(--gray);
-  opacity:0;transition:opacity 1s var(--e) .7s;
+/* 名前 */
+.mv-names{position:relative;min-height:78px}
+.mv-name{
+  position:absolute;left:0;bottom:0;display:block;text-decoration:none;
+  opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .26s var(--e),transform .26s var(--e);
 }
-.mv-solo.in .mv-scroll{opacity:1}
-.mv-scroll i{width:1px;height:44px;background:var(--line);position:relative;overflow:hidden;display:block}
-.mv-scroll i::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--gold);animation:sline 1.8s var(--e) infinite}
+/* 前の名前が消えきってから次を出す（重なって二重に見えないように） */
+.mv-name.is-active{
+  opacity:1;transform:none;pointer-events:auto;
+  transition:opacity .5s var(--e) .28s,transform .5s var(--e) .28s;
+}
+.mn-jp{
+  display:block;font-size:clamp(21px,2.6vw,32px);font-weight:500;
+  letter-spacing:.1em;color:var(--ink);line-height:1.35;
+}
+.mn-en{
+  display:block;margin-top:7px;font-family:var(--serif);font-style:italic;
+  font-size:clamp(13px,1.5vw,17px);letter-spacing:.14em;color:var(--gold-deep);
+}
+.mn-go{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;margin-top:14px;border:1px solid var(--line);border-radius:50%;
+  color:var(--gold);font-size:13px;transition:background .4s var(--e),border-color .4s var(--e),color .4s var(--e),transform .4s var(--e);
+}
+.mv-name:hover .mn-go,.mv-name:focus-visible .mn-go{background:var(--gold);border-color:var(--gold);color:#fff;transform:translateX(4px)}
+
+/* インジケーター（残り時間バー） */
+.mv-dots{display:flex;gap:9px;margin-top:24px}
+.mv-dot{
+  appearance:none;-webkit-appearance:none;border:0;padding:10px 0;background:none;
+  cursor:pointer;width:38px;display:block;
+}
+.mv-dot i{display:block;width:100%;height:2px;background:var(--line);position:relative;overflow:hidden}
+.mv-dot i::after{
+  content:"";position:absolute;inset:0;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+}
+.mv-dot.is-active i::after{animation:mvbar 3s linear forwards}
+.mv-solo.is-paused .mv-dot.is-active i::after{animation-play-state:paused}
+@keyframes mvbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.mv-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  max-width:1020px;margin:0 auto;padding:22px clamp(20px,4vw,48px) 0;
+}
+.mv-tag{font-size:clamp(15px,2vw,19px);font-weight:500;letter-spacing:.14em}
+.mv-tag em{font-family:var(--serif);font-style:italic;color:var(--gold-deep);letter-spacing:.08em;font-size:.92em;margin-left:14px}
+.scrolldown{display:flex;align-items:center;gap:10px;font-size:9.5px;letter-spacing:.34em;color:var(--gray)}
+.scrolldown i{width:1px;height:44px;background:var(--line);position:relative;overflow:hidden;display:block}
+.scrolldown i::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--gold);animation:sline 1.8s var(--e) infinite}
 @keyframes sline{to{top:110%}}
 
 /* ---------- Section commons ---------- */
@@ -406,30 +421,26 @@ section{scroll-margin-top:76px}
 @media(max-width:720px){
   .hdr-nav a.nlink,.hdr-cta{display:none}
   .burger{display:block}
-  /* ヒーロー：写真を全面に敷き、下からのグラデーションの上に文字を置く */
-  .mv-solo{grid-template-columns:1fr;grid-template-rows:1fr}
-  .mv-visual{grid-area:1/1;grid-column:1;grid-row:1;position:relative}
-  .mv-copy{
-    grid-area:1/1;grid-column:1;grid-row:1;z-index:6;justify-content:flex-end;
-    padding:0 22px calc(env(safe-area-inset-bottom,0px) + 74px);
+  /* ヒーロー：ロゴ → 写真 → 名前 の縦積み */
+  .mv-solo-inner{
+    grid-template-columns:1fr;grid-template-rows:auto auto auto;
+    grid-template-areas:"brand" "stage" "meta";
+    gap:16px;padding:0 20px;
   }
-  /* ヘッダーにロゴがあるので、ヒーロー側の大きいロゴは出さない（重複回避＆写真を最大化） */
-  .mv-brand-logo,.mv-brand-sub{display:none}
-  .mv-lead{
-    margin-top:0;font-size:clamp(21px,6.4vw,27px);line-height:1.6;letter-spacing:.08em;
-  }
-  .mv-lead em{margin-top:9px;font-size:.5em}
-  .mv-person{margin-top:18px;padding-top:13px;gap:10px}
-  .mp-jp{font-size:14px}
-  .mp-en{font-size:12px}
-  .mv-scroll{left:22px;bottom:calc(env(safe-area-inset-bottom,0px) + 22px)}
-  /* 文字が乗る下半分だけ、用紙色を効かせて確実に読ませる */
-  .mv-visual::after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:4;pointer-events:none;
-    background:linear-gradient(180deg,rgba(250,249,246,0) 0%,rgba(250,249,246,.74) 40%,rgba(250,249,246,.96) 70%,var(--paper) 88%);
-  }
-  .mv-visual::before{height:110px;background:linear-gradient(180deg,rgba(250,249,246,.55),rgba(250,249,246,0))}
-  .mv-slide img{object-position:50% 12%}
+  .mv-brand{text-align:center}
+  .mv-brand-logo{width:min(44vw,188px);margin:0 auto}
+  /* ヘッダーのロゴ直下に同じ英字が並んで重複するため、スマホでは省く */
+  .mv-brand-sub{display:none}
+  .mv-stage{aspect-ratio:4/5;height:auto;max-height:min(56vh,520px);width:100%}
+  .mv-meta{align-self:auto;padding-bottom:0}
+  .mv-names{min-height:64px;text-align:center}
+  .mv-name{left:0;right:0;text-align:center}
+  .mn-jp{font-size:20px}
+  .mn-en{font-size:13px;margin-top:5px}
+  .mn-go{margin-top:11px;width:28px;height:28px}
+  .mv-dots{justify-content:center;margin-top:14px;gap:8px}
+  .mv-dot{width:30px;padding:9px 0}
+  .mv-foot{flex-direction:column;align-items:flex-start;gap:16px}
   .tal-grid{grid-template-columns:repeat(2,1fr)}
   .news-list{grid-template-columns:repeat(2,1fr);gap:24px 14px}
   .news-date{font-size:13px;margin-top:12px}
@@ -440,14 +451,13 @@ section{scroll-margin-top:76px}
 /* ===== PC(961px以上)のみ：ヒーローを本文と同じ1160px幅に揃え、タイルを横長にして主張を抑える
    ※スマホ(720px以下)とニュースには一切影響しません ===== */
 @media(min-width:721px) and (max-width:960px){
-  /* タブレット：写真の比率を少し広げ、コピーの余白を詰める */
-  .mv-solo{grid-template-columns:minmax(0,47fr) minmax(0,53fr)}
-  .mv-lead{font-size:clamp(24px,3.4vw,32px)}
-  .mv-brand-logo{width:clamp(132px,17vw,176px)}
+  /* タブレット：写真をやや控えめにして左のロゴ・名前と釣り合わせる */
+  .mv-stage{height:min(56vh,486px)}
+  .mv-brand-logo{width:clamp(140px,19vw,190px)}
+  .mv-names{min-height:70px}
 }
-@media(min-width:1600px){
-  /* 大画面では写真を少しだけ広く見せる */
-  .mv-solo{grid-template-columns:minmax(0,42fr) minmax(0,58fr)}
+@media(min-width:961px){
+  .mv-solo{padding-top:clamp(10px,2.2vw,30px)}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -490,17 +500,15 @@ section{scroll-margin-top:76px}
   <a href="<?php echo esc_url( home_url('/entry/') ); ?>">audition<span class="mm-jp">モデル・タレント応募</span></a>
 </div>
 
-<!-- ================= Hero キービジュアル（所属タレント1名を大きく） ================= -->
+<!-- ================= Hero（所属タレントを1人ずつ表示・3秒で切替） ================= -->
 <section class="mv" id="top">
 <?php
-$hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>1,'post_status'=>'publish','ignore_sticky_posts'=>true));
+$hero = new WP_Query(array('post_type'=>'talent','posts_per_page'=>8,'post_status'=>'publish','ignore_sticky_posts'=>true));
 $hero_items = array();
 if ( $hero->have_posts() ) {
   while ( $hero->have_posts() ) { $hero->the_post();
     $hero_items[] = array(
       'id'   => get_the_ID(),
-      /* トップ専用の画像が設定されていればそれを使う（未設定ならアイキャッチ） */
-      'top'  => function_exists('get_field') ? get_field('talent_top_photo') : '',
       'link' => get_permalink(),
       'jp'   => function_exists('get_field') ? get_field('talent_name') : get_the_title(),
       'en'   => function_exists('get_field') ? get_field('talent_name_roma') : '',
@@ -511,37 +519,51 @@ wp_reset_postdata();
 $mv_logo = get_template_directory_uri() . '/images/logo.png';
 ?>
   <div class="mv-solo" id="mvSolo">
+    <div class="mv-solo-inner">
 
-    <div class="mv-visual" id="mvStage">
+      <div class="mv-brand">
+        <img class="mv-brand-logo" src="<?php echo esc_url( $mv_logo ); ?>" alt="Mi-So">
+        <span class="mv-brand-sub">TALENT&nbsp;MANAGEMENT</span>
+      </div>
+
+      <div class="mv-stage" id="mvStage">
 <?php foreach ( $hero_items as $i => $t ) :
-        /* キービジュアルは画面の半分以上を占めるので、実サイズを正しくブラウザに伝える */
-        $img_attr = array( 'alt' => $t['jp'], 'sizes' => '(max-width:720px) 100vw, 58vw' );
+        $img_attr = array( 'alt' => $t['jp'] );
         if ( 0 === $i ) { $img_attr['loading'] = 'eager'; $img_attr['fetchpriority'] = 'high'; }
 ?>
-      <a class="mv-slide<?php echo 0 === $i ? ' is-active' : ''; ?>" href="<?php echo esc_url( $t['link'] ); ?>"
-         tabindex="<?php echo 0 === $i ? '0' : '-1'; ?>" aria-label="<?php echo esc_attr( $t['jp'] ); ?>">
-        <?php
-          if ( ! empty( $t['top'] ) ) { echo wp_get_attachment_image( $t['top'], 'large', false, $img_attr ); }
-          else { echo get_the_post_thumbnail( $t['id'], 'large', $img_attr ); }
-        ?>
-      </a>
+        <a class="mv-slide<?php echo 0 === $i ? ' is-active' : ''; ?>" href="<?php echo esc_url( $t['link'] ); ?>"
+           tabindex="<?php echo 0 === $i ? '0' : '-1'; ?>" aria-hidden="<?php echo 0 === $i ? 'false' : 'true'; ?>">
+          <?php echo get_the_post_thumbnail( $t['id'], 'large', $img_attr ); ?>
+        </a>
 <?php endforeach; ?>
-    </div>
+      </div>
 
-    <div class="mv-copy">
-      <img class="mv-brand-logo" src="<?php echo esc_url( $mv_logo ); ?>" alt="Mi-So">
-      <span class="mv-brand-sub">TALENT&nbsp;MANAGEMENT</span>
-      <p class="mv-lead">その輝きを、<br>もっと遠くへ。<em>Mi-So inc.</em></p>
-<?php if ( ! empty( $hero_items ) ) : $t = $hero_items[0]; ?>
-      <a class="mv-person" href="<?php echo esc_url( $t['link'] ); ?>">
-        <span class="mp-jp"><?php echo esc_html( $t['jp'] ); ?></span>
-        <span class="mp-en"><?php echo esc_html( $t['en'] ); ?></span>
-        <span class="mp-go" aria-hidden="true">&rarr;</span>
-      </a>
+      <div class="mv-meta">
+        <div class="mv-names">
+<?php foreach ( $hero_items as $i => $t ) : ?>
+          <a class="mv-name<?php echo 0 === $i ? ' is-active' : ''; ?>" href="<?php echo esc_url( $t['link'] ); ?>"
+             tabindex="<?php echo 0 === $i ? '0' : '-1'; ?>" aria-hidden="<?php echo 0 === $i ? 'false' : 'true'; ?>">
+            <span class="mn-jp"><?php echo esc_html( $t['jp'] ); ?></span>
+            <span class="mn-en"><?php echo esc_html( $t['en'] ); ?></span>
+            <span class="mn-go" aria-hidden="true">&rarr;</span>
+          </a>
+<?php endforeach; ?>
+        </div>
+<?php if ( count( $hero_items ) > 1 ) : ?>
+        <div class="mv-dots" id="mvDots">
+<?php foreach ( $hero_items as $i => $t ) : ?>
+          <button type="button" class="mv-dot<?php echo 0 === $i ? ' is-active' : ''; ?>" data-i="<?php echo (int) $i; ?>"
+                  aria-label="<?php echo esc_attr( $t['jp'] ); ?>"><i></i></button>
+<?php endforeach; ?>
+        </div>
 <?php endif; ?>
-    </div>
+      </div>
 
-    <div class="mv-scroll">scroll<i></i></div>
+    </div>
+  </div>
+  <div class="mv-foot">
+    <p class="mv-tag rv">その輝きを、もっと遠くへ。<em>Mi-So inc.</em></p>
+    <div class="scrolldown">scroll<i></i></div>
   </div>
 </section>
 
@@ -691,6 +713,7 @@ if ( $tq->have_posts() ) : while ( $tq->have_posts() ) : $tq->the_post();
       </div>
       <dl class="comp-dl rv" style="--d:.1s">
         <div class="row"><dt>会社名</dt><dd>株式会社Mi-So</dd></div>
+        <div class="row"><dt>設立</dt><dd>2021年8月18日</dd></div>
         <div class="row"><dt>所在地</dt><dd>〒150-0022<br>東京都渋谷区恵比寿南1-1-1 ヒューマックス恵比寿ビル8階 818</dd></div>
       </dl>
     </div>
